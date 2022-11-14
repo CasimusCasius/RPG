@@ -1,0 +1,32 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace RPG.Movment
+{
+
+
+    public class Mover : MonoBehaviour
+    {
+
+        void Update()
+        {
+            UpdateAnimator();
+        }
+
+        private void UpdateAnimator()
+        {
+            Vector3 velociy = GetComponent<NavMeshAgent>().velocity;
+            Vector3 localVelocity = transform.InverseTransformDirection(velociy); //konwersja na lokaln¹
+            float speed = localVelocity.z;
+            GetComponent<Animator>().SetFloat("fowardSpeed", speed);
+        }
+
+
+
+
+        public void MoveTo(Vector3 destination)
+        {
+            GetComponent<NavMeshAgent>().destination = destination;
+        }
+    }
+}
