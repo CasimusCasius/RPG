@@ -1,4 +1,5 @@
-using RPG.Combat;
+
+using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -6,7 +7,7 @@ namespace RPG.Movment
 {
 
 
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         NavMeshAgent navMeshAgent;
 
@@ -28,13 +29,13 @@ namespace RPG.Movment
             GetComponent<Animator>().SetFloat("fowardSpeed", speed);
         }
 
-        public void Stop()
+        public void Cancel()
         {
             navMeshAgent.isStopped= true;
         }
         public void StartMoveAction(Vector3 designation)
         {
-            GetComponent<Fighter>().Cancel();
+            GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(designation);
         }
 
@@ -43,5 +44,7 @@ namespace RPG.Movment
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
         }
+
+       
     }
 }

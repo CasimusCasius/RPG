@@ -14,7 +14,7 @@ namespace RPG.Control
         {
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
-            print("Nie mam co robiæ");
+            
         }
 
         private bool InteractWithCombat()
@@ -43,8 +43,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>().StartMoveAction(hit.point);
-                    
+                    GetComponent<Mover>().StartMoveAction(hit.point);   
                 }
             }
             return hasHit;
