@@ -1,9 +1,5 @@
 using RPG.Combat;
 using RPG.Movment;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Control
@@ -14,7 +10,7 @@ namespace RPG.Control
         {
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
-            
+
         }
 
         private bool InteractWithCombat()
@@ -24,11 +20,13 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (!GetComponent<Fighter>().CanAttack(target)) continue;
+                if (target == null) continue;
+
+                if (!GetComponent<Fighter>().CanAttack(target.gameObject)) continue;
 
                 if (Input.GetMouseButtonDown(0))
-                { 
-                    GetComponent<Fighter>().Attack(target);
+                {
+                    GetComponent<Fighter>().Attack(target.gameObject);
                 }
                 return true;
             }
@@ -43,7 +41,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>().StartMoveAction(hit.point);   
+                    GetComponent<Mover>().StartMoveAction(hit.point);
                 }
             }
             return hasHit;
