@@ -1,26 +1,30 @@
 using RPG.Combat;
 using RPG.Core;
+using RPG.Movment;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
-
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
     {
         [SerializeField] float chaseDistance = 5f;
+
         Fighter thisEnemyFighter;
         Health health;
         GameObject player;
+        Mover mover;
+
+        Vector3 guardPosition;
 
         private void Awake()
         {
             thisEnemyFighter= GetComponent<Fighter>();
             health = GetComponent<Health>();
+            mover = GetComponent<Mover>();
         }
-
         private void Start()
         {
             player = GameObject.FindWithTag("Player");
+            guardPosition = transform.position;
         }
         private void Update()
         {
@@ -34,7 +38,7 @@ namespace RPG.Control
             }
             else
             {
-                thisEnemyFighter.Cancel();
+                mover.StartMoveAction(guardPosition);
             }
         }
 
@@ -43,7 +47,6 @@ namespace RPG.Control
             float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
             return distanceToPlayer < chaseDistance;
         }
-
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.blue;

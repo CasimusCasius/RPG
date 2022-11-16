@@ -1,7 +1,5 @@
 using RPG.Core;
 using RPG.Movment;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -12,14 +10,15 @@ namespace RPG.Combat
         [SerializeField] float attackRange = 2f;
         [SerializeField] float timeBeetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5;
+
         Health target;
-        float timeSinceLastAttack=Mathf.Infinity;
+        float timeSinceLastAttack = Mathf.Infinity;
 
         private void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
-            
+
             if (target.IsDead())
             {
                 Cancel();
@@ -47,7 +46,7 @@ namespace RPG.Combat
         }
         public bool CanAttack(GameObject target)
         {
-            if (target == null ) { return false; }
+            if (target == null) { return false; }
             Health targetToTest = target.GetComponent<Health>();
             return (targetToTest != null && !targetToTest.IsDead());
 
@@ -57,7 +56,6 @@ namespace RPG.Combat
             GetComponent<ActionScheduler>().StartAction(this);
             target = combatTarget.GetComponent<Health>();
         }
-
         public void Cancel()
         {
             TriggerStopAttack();

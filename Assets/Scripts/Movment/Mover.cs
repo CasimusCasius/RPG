@@ -1,12 +1,9 @@
-
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace RPG.Movment
 {
-
-
     public class Mover : MonoBehaviour, IAction
     {
         NavMeshAgent navMeshAgent;
@@ -17,14 +14,11 @@ namespace RPG.Movment
             navMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
         }
-
         void Update()
         {
-
             navMeshAgent.enabled= !health.IsDead();
             UpdateAnimator();
         }
-
         private void UpdateAnimator()
         {
             Vector3 velociy = GetComponent<NavMeshAgent>().velocity;
@@ -32,26 +26,23 @@ namespace RPG.Movment
             float speed = localVelocity.z;
             GetComponent<Animator>().SetFloat("fowardSpeed", speed);
         }
-
         public void Cancel()
         {
             navMeshAgent.isStopped= true;
         }
+        /// <summary>
+        /// Starts Move action Canceling other Actions
+        /// </summary>
+        /// <param name="designation"></param>
         public void StartMoveAction(Vector3 designation)
         {
-            if (!GetComponent<Health>().IsDead())
-            {
                 GetComponent<ActionScheduler>().StartAction(this);
                 MoveTo(designation);
-            }
         }
-
         public void MoveTo(Vector3 destination)
         {
             navMeshAgent.destination = destination;
             navMeshAgent.isStopped = false;
         }
-
-       
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Core
@@ -8,7 +6,6 @@ namespace RPG.Core
     public class ActionScheduler : MonoBehaviour
     {
         IAction currentAction;
-
 
         public void StartAction(IAction action)
         {
@@ -21,7 +18,6 @@ namespace RPG.Core
                 currentAction = action;
             }
         }
-
         public void CancelCurrentAction()
         {
             StartAction(null);
