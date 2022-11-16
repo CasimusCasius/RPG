@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
 
 
@@ -13,12 +13,18 @@ namespace RPG.Combat
         public void TakeDamage(float damage)
         {
             healthPoints = Mathf.Max(healthPoints-damage,0);
-            if(!isDead && healthPoints == 0) 
+            if(healthPoints == 0)
             {
-                isDead = true;
-                GetComponent<Animator>().SetTrigger("die");
+                Die();
             }
+        }
 
+        private void Die()
+        {
+            if (isDead) return;
+            isDead = true;
+            GetComponent<Animator>().SetTrigger("die");
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
 
         public bool IsDead()

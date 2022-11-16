@@ -13,12 +13,13 @@ namespace RPG.Combat
         [SerializeField] float timeBeetweenAttacks = 1f;
         [SerializeField] float weaponDamage = 5;
         Health target;
-        float timeSinceLastAttack=0f;
+        float timeSinceLastAttack=Mathf.Infinity;
 
         private void Update()
         {
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
+            
             if (target.IsDead())
             {
                 Cancel();

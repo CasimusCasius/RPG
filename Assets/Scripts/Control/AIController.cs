@@ -1,4 +1,5 @@
 using RPG.Combat;
+using RPG.Core;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -8,11 +9,13 @@ namespace RPG.Control
     {
         [SerializeField] float chaseDistance = 5f;
         Fighter thisEnemyFighter;
+        Health health;
         GameObject player;
 
         private void Awake()
         {
             thisEnemyFighter= GetComponent<Fighter>();
+            health = GetComponent<Health>();
         }
 
         private void Start()
@@ -21,6 +24,8 @@ namespace RPG.Control
         }
         private void Update()
         {
+            if (health.IsDead())return;
+            
             if (GetComponent<Fighter>() == null) return;
 
             if (InAttackRange() && thisEnemyFighter.CanAttack(player))
@@ -31,10 +36,7 @@ namespace RPG.Control
             {
                 thisEnemyFighter.Cancel();
             }
-            if (GetComponent<Health>().IsDead())
-            {
-                thisEnemyFighter.Cancel();
-            }
+            
 
             
         }

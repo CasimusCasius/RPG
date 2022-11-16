@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace RPG.Combat
 {
-    [RequireComponent(typeof(Health))]
+    [RequireComponent(typeof(Core.Health))]
     public class CombatTarget : MonoBehaviour
     {
        
