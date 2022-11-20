@@ -60,6 +60,7 @@ namespace RPG.Combat
         {
             TriggerStopAttack();
             target = null;
+            GetComponent<Mover>()?.Cancel();
         }
         // AnimationEvent
         void Hit()
