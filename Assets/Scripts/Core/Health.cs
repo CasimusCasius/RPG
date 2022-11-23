@@ -7,6 +7,7 @@ namespace RPG.Core
     {
         [SerializeField] float healthPoints = 100f;
         bool isDead;
+
         public void TakeDamage(float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
@@ -26,12 +27,10 @@ namespace RPG.Core
         {
             return isDead;
         }
-
         public object CaptureState()
         {
             return healthPoints;
         }
-
         public void RestoreState(object state)
         {
             healthPoints = (float) state;

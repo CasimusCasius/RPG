@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 namespace RPG.Core
 {
@@ -16,7 +13,6 @@ namespace RPG.Core
             SpawPresistentObject();
             hasSpawned = true;
         }
-
         private void SpawPresistentObject()
         {
             GameObject presistentObject = Instantiate(persistentObjectPrefab);
