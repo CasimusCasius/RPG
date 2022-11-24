@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using UnityEngine;
 
 namespace RPG.Saving
@@ -16,10 +14,8 @@ namespace RPG.Saving
             print("Saving to  " + path);
             using (FileStream stream = File.Open(path, FileMode.Create))
             {
-                Transform playerTransform = GetPlayerTransform();
                 BinaryFormatter formatter = new BinaryFormatter();
-                SerializableVector3 position = new SerializableVector3(playerTransform.position);
-                formatter.Serialize(stream, position);
+                formatter.Serialize(stream, CaptureState());
             }
         }
         public void Load(string saveFile)
@@ -29,13 +25,30 @@ namespace RPG.Saving
             using (FileStream stream = File.Open(path, FileMode.Open))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                SerializableVector3 position = (SerializableVector3)formatter.Deserialize(stream);
-                GetPlayerTransform().position = position.ToVector3();
+                RestoreState(formatter.Deserialize(stream));
+
             }
         }
-        private Transform GetPlayerTransform()
+        private void RestoreState(object state)
         {
-            return GameObject.FindWithTag("Player").transform;
+            Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
+
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                saveable.RestoreState(stateDict[saveable.GetUniqeIdentifier()]);
+            }
+
+        }
+
+        private object CaptureState()
+        {
+            Dictionary<string, object> state = new Dictionary<string, object>();
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>())
+            {
+                state[saveable.GetUniqeIdentifier()] = saveable.CaptureState();
+            }
+
+            return state;
         }
 
         private string GetPathFromSaveFile(string saveFile)
