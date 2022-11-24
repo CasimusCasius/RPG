@@ -39,7 +39,7 @@ namespace RPG.Saving
             }
 
         }
-
+        #region unity_editor
 #if UNITY_EDITOR
         private void Update()
         {
@@ -57,7 +57,8 @@ namespace RPG.Saving
 
             globalLookup[property.stringValue] = this;
         }
-
+#endif
+        #endregion
         private bool IsUnique(string candidate)
         {
             if (!globalLookup.ContainsKey(candidate)) return true;
@@ -76,6 +77,6 @@ namespace RPG.Saving
 
                 return false;
         }
-#endif
+
     }
 }
