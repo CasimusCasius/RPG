@@ -1,4 +1,5 @@
 
+using RPG.Saving;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,11 +25,11 @@ namespace RPG.SceneManagment
         [SerializeField] float fadeInTime = 2f;
         [SerializeField] float fadeWaitTime = 0.5f;
 
-
+        
 
         private void Start()
         {
-           
+            FindObjectOfType<SavingWrapper>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -48,13 +49,15 @@ namespace RPG.SceneManagment
                 yield break;
             }
 
-            
-
             DontDestroyOnLoad(gameObject);
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
             Fader fader = FindObjectOfType<Fader>();
             yield return fader.FadeOut(fadeOutTime);
-            yield return SceneManager.LoadSceneAsync(portalToSceneIndex);
             
+            savingWrapper.Save();
+            yield return SceneManager.LoadSceneAsync(portalToSceneIndex);
+            savingWrapper.Load();
+
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 
@@ -67,8 +70,8 @@ namespace RPG.SceneManagment
         {
             GameObject player = GameObject.FindWithTag("Player");
 
-            bool succes = player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
-            Debug.Log(otherPortal.spawnPoint.position);
+            player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
+            
             player.transform.rotation= otherPortal.spawnPoint.rotation;
         }
 
