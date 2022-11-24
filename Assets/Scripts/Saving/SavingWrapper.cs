@@ -1,14 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 namespace RPG.Saving
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string DEFAULT_SAVE_FILE = "quicksave";
+        public const string DEFAULT_SAVE_FILE = "quicksave";
 
-        private void Start()
+        private IEnumerator Start()
         {
-            Save();
+            yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
         }
         private void Update()
         {
