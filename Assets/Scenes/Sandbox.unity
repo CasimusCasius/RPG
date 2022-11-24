@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 7461ef9e4d9f9f54baf0d853f89c6003, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 640b6227bcf26fd4fb8e1a6fc16dd8bf, type: 2}
 --- !u!1 &19766549
 GameObject:
   m_ObjectHideFlags: 3
@@ -3392,6 +3392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0003f9e6fab8c1419946ed68b740922, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayed: 1
 --- !u!114 &473096622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11433,7 +11434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1611475812}
-  m_PathPosition: 1
+  m_PathPosition: 0
   m_PositionUnits: 2
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
