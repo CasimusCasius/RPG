@@ -150,7 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeetweenAttacks: 1
-  handTransform: {fileID: 0}
+  rightHandTransform: {fileID: 2431178679580950163}
+  leftHandTransform: {fileID: 0}
   defaultWeapon: {fileID: 0}
 --- !u!114 &3450452326543540838
 MonoBehaviour:

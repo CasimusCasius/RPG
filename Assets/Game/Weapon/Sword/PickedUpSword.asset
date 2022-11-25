@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f342fddbd9df3af4591ea13410cb4ea2, type: 3}
   m_Name: PickedUpSword
   m_EditorClassIdentifier: 
-  equippedPrefab: {fileID: 4182896613218359973, guid: 99932e4113676534984bf73358aeb78f, type: 3}
+  equippedPrefab: {fileID: 9073120110870473220, guid: 505376bd32e1bb049a938c7f6d056cec, type: 3}
   animatorOverride: {fileID: 22100000, guid: 1fe92a6e7c8b672498b4b38ccfb0f1e4, type: 2}
   attackRange: 2
-  weaponDamage: 5
+  weaponDamage: 10
+  isRightHanded: 1
