@@ -12,7 +12,7 @@ namespace RPG.Combat
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
         [SerializeField] Weapon defaultWeapon = null;
-        
+
 
         Health target;
         float timeSinceLastAttack = Mathf.Infinity;
@@ -74,8 +74,18 @@ namespace RPG.Combat
         void Hit()
         {
             if (target == null) return;
-            target.TakeDamage(currentWeapon.GetWeaponDamage());
+            if (currentWeapon.HasProjectiles())
+            {
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+            }
+            else
+            {
+                target.TakeDamage(currentWeapon.GetWeaponDamage());
+            }
         }
+
+        void Shoot() { Hit(); }
+
         private bool IsInRange()
         {
             return Vector3.Distance(target.transform.position, transform.position) <= currentWeapon.GetAttackRange();
@@ -95,7 +105,7 @@ namespace RPG.Combat
             if (weapon == null) return;
             currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
-            weapon.Spawn(rightHandTransform,leftHandTransform, animator);
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
     }
 }
