@@ -14,6 +14,8 @@ namespace RPG.Combat
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectilePrefab = null;
 
+        // TODO Particle system on Atacking sword
+
         const string weaponName = "Weapon";
         
 
@@ -63,7 +65,15 @@ namespace RPG.Combat
         }
         public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, Fighter damageDealer)
         {
-            
+            // TODO arrow parabolic move
+            // Z = distance
+            // v0 = sqrt(Z * g / sin(2*alpha0)
+            // alphax= arctg(tg(alpha0) - (g*dx/v0*v0*cos(alpha0)*cos(alpha0))) // rotation 
+            // x(t) = v0*t *sin(alpha)
+            // y(t) = v0 *t * sin(alpha) - g*t*t/2
+            // alpha0 = arcsin(Z * g/(v0*v0))/2
+
+
             Projectile projectile = Instantiate(projectilePrefab, GetSideOfWeapon(rightHand, leftHand).position, Quaternion.identity);
             projectile.SetTarget(target);
             projectile.SetProjectile(weaponDamage, attackRange, damageDealer);

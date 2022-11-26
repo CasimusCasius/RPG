@@ -39,6 +39,10 @@ PrefabInstance:
       propertyPath: m_Parameters.colorGradient.m_Mode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7078011394808921932, guid: 8c5c49cc8513519468af7490e65fb773, type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7415743911285389949, guid: 8c5c49cc8513519468af7490e65fb773, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

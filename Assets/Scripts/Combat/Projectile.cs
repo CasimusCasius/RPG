@@ -7,18 +7,20 @@ namespace RPG.Combat
     {
         [SerializeField] float projectileSpeed = 20;
         [SerializeField] bool isHoming = false;
+        [SerializeField] GameObject hitEffect = null;
+        
         float projectileRange;
         Health target;
         Fighter damageDealer;
         float damage = 0;
         float timeOfLife;
-        
+
         private void Start()
         {
 
             transform.LookAt(GetAimLocation());
             float timeOfLifeFactor = 1.5f;
-            timeOfLife = (1 / projectileSpeed) * projectileRange*timeOfLifeFactor  ;
+            timeOfLife = (1 / projectileSpeed) * projectileRange * timeOfLifeFactor;
         }
         private void Update()
         {
@@ -33,10 +35,9 @@ namespace RPG.Combat
         public void SetTarget(Health target)
         {
             this.target = target;
-            
         }
 
-        public void SetProjectile (float damage,float weaponRange ,Fighter damageDealer)
+        public void SetProjectile(float damage, float weaponRange, Fighter damageDealer)
         {
             this.damage = damage;
             this.projectileRange = weaponRange;
@@ -57,12 +58,25 @@ namespace RPG.Combat
 
             if (other.TryGetComponent<Health>(out Health enemy))
             {
-                enemy.TakeDamage(damage);
+                StartProjectalHitEffect();
+                projectileSpeed = 0;
                 if (enemy.IsDead()) { return; }
-                Destroy(gameObject);
+                enemy.TakeDamage(damage);
+
+                Destroy(gameObject, 0.2f);
             }
 
-            Destroy(gameObject,timeOfLife);
+            Destroy(gameObject, timeOfLife);
+        }
+
+        private void StartProjectalHitEffect()
+        {
+            if (hitEffect == null) { return; }
+
+            RaycastHit hit;
+            if (!Physics.Raycast(transform.position, transform.forward, out hit)) return;
+            Instantiate(hitEffect, hit.point, Quaternion.identity);
+
         }
     }
 }
