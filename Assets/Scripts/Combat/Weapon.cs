@@ -17,7 +17,7 @@ namespace RPG.Combat
         // TODO Particle system on Atacking sword
 
         const string weaponName = "Weapon";
-        
+
 
         public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
@@ -30,9 +30,14 @@ namespace RPG.Combat
                 GameObject weapon = Instantiate(equippedPrefab, handTransform);
                 weapon.name = weaponName;
             }
+            var overrideControler = animator.runtimeAnimatorController as AnimatorOverrideController;
             if (animatorOverride != null)
             {
                 animator.runtimeAnimatorController = animatorOverride;
+            }
+            else if (overrideControler != null)
+            {
+                animator.runtimeAnimatorController = overrideControler.runtimeAnimatorController;
             }
         }
 
@@ -83,5 +88,5 @@ namespace RPG.Combat
         public float GetAttackRange() => attackRange;
         public float GetWeaponDamage() => weaponDamage;
 
-    } 
+    }
 }
