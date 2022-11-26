@@ -1,13 +1,20 @@
+using RPG.Core;
 using RPG.Saving;
+using RPG.Stats;
 using UnityEngine;
 
-namespace RPG.Core
+namespace RPG.Atributes
+
 {
     public class Health : MonoBehaviour, ISaveable
-
     {
         [SerializeField] float healthPoints = 100f;
         bool isDead;
+        private void Start()
+        {
+            healthPoints = GetComponent<BaseStats>().GetHealth();
+        }
+
         public void TakeDamage(float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);

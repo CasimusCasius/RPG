@@ -1,3 +1,4 @@
+using RPG.Atributes;
 using RPG.Core;
 using RPG.Movment;
 using RPG.Saving;

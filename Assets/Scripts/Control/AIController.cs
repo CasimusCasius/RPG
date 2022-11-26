@@ -1,7 +1,7 @@
+using RPG.Atributes;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movment;
-using System;
 using UnityEngine;
 namespace RPG.Control
 {
@@ -26,10 +26,10 @@ namespace RPG.Control
         float timeSinceArrivedAtWaypoint = Mathf.Infinity;
         private void Awake()
         {
-            fighter= GetComponent<Fighter>();
+            fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
             mover = GetComponent<Mover>();
-            actionScheduler= GetComponent<ActionScheduler>();
+            actionScheduler = GetComponent<ActionScheduler>();
         }
         private void Start()
         {
@@ -76,12 +76,12 @@ namespace RPG.Control
 
                 }
                 nextPosition = GetCurrentWaypoint();
-                
+
             }
             if (timeSinceArrivedAtWaypoint >= timeOfDwelling)
             {
-                mover.StartMoveAction(nextPosition,patrolSpeedFraction);
-            }    
+                mover.StartMoveAction(nextPosition, patrolSpeedFraction);
+            }
         }
         private bool InAttackRange()
         {

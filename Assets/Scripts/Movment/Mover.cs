@@ -1,8 +1,8 @@
+using RPG.Atributes;
 using RPG.Core;
 using RPG.Saving;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 namespace RPG.Movment
 {
@@ -20,7 +20,7 @@ namespace RPG.Movment
         }
         void Update()
         {
-            navMeshAgent.enabled= !health.IsDead();
+            navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator();
         }
         private void UpdateAnimator()
@@ -32,7 +32,7 @@ namespace RPG.Movment
         }
         public void Cancel()
         {
-            navMeshAgent.isStopped= true;
+            navMeshAgent.isStopped = true;
         }
         /// <summary>
         /// Starts Move action Canceling other Actions
@@ -40,9 +40,9 @@ namespace RPG.Movment
         /// <param name="designation"></param>
         public void StartMoveAction(Vector3 designation, float speedFraction)
         {
-                GetComponent<ActionScheduler>().StartAction(this);
-                
-                MoveTo(designation,speedFraction);
+            GetComponent<ActionScheduler>().StartAction(this);
+
+            MoveTo(designation, speedFraction);
         }
         public void MoveTo(Vector3 destination, float speedFraction)
         {

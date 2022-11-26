@@ -9,13 +9,29 @@ namespace RPG.Stats
     {
         [SerializeField] ProgressionCharacterClass[] characterClasses = null;
 
+        public float GetHealth(CharacterClass characterClass, int level)
+        {
+
+            Debug.Log((int)characterClass);
+            Debug.Log(characterClasses[(int)characterClass]);
+            return characterClasses[(int)characterClass].GetHealth(level);
+        }
+
+
+
         [System.Serializable]
         class ProgressionCharacterClass
         {
             [SerializeField] CharacterClass characterClass;
-            [SerializeField] int[] health=null;
-            
+            [SerializeField] float[] health=null;
+
+            public float GetHealth(int level)
+            {
+                return health[level - 1];
+            }
         }
+
+
 
     }
 }

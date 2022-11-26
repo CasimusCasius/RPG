@@ -1,4 +1,4 @@
-using RPG.Core;
+using RPG.Atributes;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -8,7 +8,7 @@ namespace RPG.Combat
         [SerializeField] float projectileSpeed = 20;
         [SerializeField] bool isHoming = false;
         [SerializeField] GameObject hitEffect = null;
-        
+
         float projectileRange;
         Health target;
         Fighter damageDealer;
