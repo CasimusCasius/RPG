@@ -16260,16 +16260,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1093237844198824039, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
       propertyPath: field of view
-      value: 39.97
+      value: 45.5
       objectReference: {fileID: 0}
     - target: {fileID: 1093237844330377832, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
       propertyPath: m_Lens.FieldOfView
-      value: 39.97
+      value: 45.5
       objectReference: {fileID: 0}
     - target: {fileID: 2099735136562005392, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
       propertyPath: defaultWeapon
       value: 
       objectReference: {fileID: 11400000, guid: 7f0d22d8aab3cab44913ffdb68952c65, type: 2}
+    - target: {fileID: 2099735136562005392, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: defaultWeaponName
+      value: Sword
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
 --- !u!1 &1457963930630221678
