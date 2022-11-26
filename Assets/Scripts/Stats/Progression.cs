@@ -11,24 +11,27 @@ namespace RPG.Stats
 
         public float GetHealth(CharacterClass characterClass, int level)
         {
-
-            Debug.Log((int)characterClass);
-            Debug.Log(characterClasses[(int)characterClass]);
-            return characterClasses[(int)characterClass].GetHealth(level);
+            foreach (var progressClass in characterClasses)
+            {
+                if(progressClass.GetCharacterClass() == characterClass)
+                {
+                    return progressClass.GetHealth(level);
+                }
+            }
+            
+            return 0;
         }
-
-
 
         [System.Serializable]
         class ProgressionCharacterClass
         {
             [SerializeField] CharacterClass characterClass;
-            [SerializeField] float[] health=null;
+            [SerializeField] float[] health;
 
-            public float GetHealth(int level)
-            {
-                return health[level - 1];
-            }
+
+            public CharacterClass GetCharacterClass() => characterClass;
+            public float GetHealth(int level) => health[level - 1];
+            
         }
 
 

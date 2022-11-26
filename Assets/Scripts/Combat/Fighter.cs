@@ -75,6 +75,16 @@ namespace RPG.Combat
             target = null;
             GetComponent<Mover>()?.Cancel();
         }
+        public void EquipWeapon(Weapon weapon)
+        {
+            if (weapon == null) return;
+            currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+        }
+        public Health GetTarget() => target;
+
         // AnimationEvent
         void Hit()
         {
@@ -105,15 +115,8 @@ namespace RPG.Combat
             GetComponent<Animator>().ResetTrigger("stopAttack");
             GetComponent<Animator>().SetTrigger("attack");
         }
-        public void EquipWeapon(Weapon weapon)
-        {
-            if (weapon == null) return;
-            currentWeapon = weapon;
-            Animator animator = GetComponent<Animator>();
-           
-            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
-        }
-
+        
+        //Save
         public object CaptureState()
         {
             return currentWeapon.name;
