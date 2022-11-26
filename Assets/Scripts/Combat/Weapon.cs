@@ -1,4 +1,5 @@
 using RPG.Core;
+using System;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -12,17 +13,38 @@ namespace RPG.Combat
         [SerializeField] float weaponDamage = 5;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectilePrefab = null;
+
+        const string weaponName = "Weapon";
+        
+
         public void Spawn(Transform rightHandTransform, Transform leftHandTransform, Animator animator)
         {
+
+            DestroyOldWeapon(rightHandTransform, leftHandTransform);
+
             if (equippedPrefab != null)
             {
                 Transform handTransform = GetSideOfWeapon(rightHandTransform, leftHandTransform);
-                Instantiate(equippedPrefab, handTransform);
+                GameObject weapon = Instantiate(equippedPrefab, handTransform);
+                weapon.name = weaponName;
             }
             if (animatorOverride != null)
             {
                 animator.runtimeAnimatorController = animatorOverride;
             }
+        }
+
+        private void DestroyOldWeapon(Transform rightHandTransform, Transform leftHandTransform)
+        {
+            Transform oldWeapon = rightHandTransform.Find(weaponName);
+            if (oldWeapon == null)
+            {
+                oldWeapon = leftHandTransform.Find(weaponName);
+            }
+            if (oldWeapon == null) { return; }
+
+            oldWeapon.name = "DESTROYING";
+            Destroy(oldWeapon.gameObject);
         }
 
         private Transform GetSideOfWeapon(Transform rightHandTransform, Transform leftHandTransform)
@@ -39,15 +61,16 @@ namespace RPG.Combat
 
             return handTransform;
         }
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, Fighter damageDealer)
         {
+            
             Projectile projectile = Instantiate(projectilePrefab, GetSideOfWeapon(rightHand, leftHand).position, Quaternion.identity);
-            projectile.SetTarget(target, weaponDamage);
+            projectile.SetTarget(target, weaponDamage, damageDealer);
         }
 
         public bool HasProjectiles() => projectilePrefab != null;
         public float GetAttackRange() => attackRange;
         public float GetWeaponDamage() => weaponDamage;
 
-    }
+    } 
 }

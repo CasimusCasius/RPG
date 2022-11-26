@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09d076882bc916438f0c7562814afb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowSpeed: 20
+  projectileSpeed: 20
+  isHoming: 0
+  projectileRange: 40
 --- !u!65 &6803789972063346999
 BoxCollider:
   m_ObjectHideFlags: 0

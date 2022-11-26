@@ -76,7 +76,7 @@ namespace RPG.Combat
             if (target == null) return;
             if (currentWeapon.HasProjectiles())
             {
-                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target);
+                currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, target, this);
             }
             else
             {
@@ -105,6 +105,7 @@ namespace RPG.Combat
             if (weapon == null) return;
             currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
+           
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
     }

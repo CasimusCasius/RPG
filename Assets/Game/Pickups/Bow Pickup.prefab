@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 162710218691697803, guid: 99932e4113676534984bf73358aeb78f, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 62ffedc1ce4ca0d4399d9ca1b1ea5833, type: 2}
     - target: {fileID: 3768168391736457092, guid: 99932e4113676534984bf73358aeb78f, type: 3}
       propertyPath: m_Center.z
       value: 0
