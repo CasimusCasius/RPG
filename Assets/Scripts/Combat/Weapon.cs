@@ -65,7 +65,8 @@ namespace RPG.Combat
         {
             
             Projectile projectile = Instantiate(projectilePrefab, GetSideOfWeapon(rightHand, leftHand).position, Quaternion.identity);
-            projectile.SetTarget(target, weaponDamage, damageDealer);
+            projectile.SetTarget(target);
+            projectile.SetProjectile(weaponDamage, attackRange, damageDealer);
         }
 
         public bool HasProjectiles() => projectilePrefab != null;

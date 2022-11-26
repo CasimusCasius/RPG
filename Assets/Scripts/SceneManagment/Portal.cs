@@ -40,7 +40,7 @@ namespace RPG.SceneManagment
         {
             if (portalToSceneIndex < 0)
             {
-                Debug.LogError("Scene to load nt set!");
+                Debug.LogError("Scene to load not set!");
                 yield break;
             }
 

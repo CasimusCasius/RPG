@@ -5,18 +5,20 @@ namespace RPG.Combat
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] float projectileSpeed = 1;
+        [SerializeField] float projectileSpeed = 20;
         [SerializeField] bool isHoming = false;
-        [SerializeField] float projectileRange = 20;
+        float projectileRange;
         Health target;
         Fighter damageDealer;
         float damage = 0;
         float timeOfLife;
-
+        
         private void Start()
         {
+
             transform.LookAt(GetAimLocation());
-            timeOfLife = (1/projectileSpeed) * projectileRange ; //
+            float timeOfLifeFactor = 1.5f;
+            timeOfLife = (1 / projectileSpeed) * projectileRange*timeOfLifeFactor  ;
         }
         private void Update()
         {
@@ -28,12 +30,17 @@ namespace RPG.Combat
             transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
         }
 
-        public void SetTarget(Health target, float damage, Fighter damageDealer)
+        public void SetTarget(Health target)
         {
             this.target = target;
+            
+        }
+
+        public void SetProjectile (float damage,float weaponRange ,Fighter damageDealer)
+        {
             this.damage = damage;
+            this.projectileRange = weaponRange;
             this.damageDealer = damageDealer;
-           
         }
 
         private Vector3 GetAimLocation()
@@ -46,12 +53,7 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("Hit "+ other.gameObject.name);
-
-            if (other.gameObject == damageDealer.gameObject) { 
-                
-                Debug.Log ("Thats me" + damageDealer.gameObject.name);
-                return; }
+            if (other.gameObject == damageDealer.gameObject) { return; }
 
             if (other.TryGetComponent<Health>(out Health enemy))
             {
@@ -59,8 +61,6 @@ namespace RPG.Combat
                 if (enemy.IsDead()) { return; }
                 Destroy(gameObject);
             }
-
-
 
             Destroy(gameObject,timeOfLife);
         }
