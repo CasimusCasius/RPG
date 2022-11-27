@@ -3,7 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace RPG.Atributes
+namespace RPG.Stats
 {
     public class ExperienceDisplay : MonoBehaviour
     {
@@ -14,6 +14,8 @@ namespace RPG.Atributes
             playerExpPoints =GameObject.FindGameObjectWithTag("Player").GetComponent<Experience>();
             experienceValue.text = String.Format( "{0:0}", playerExpPoints.GetExperience());
         }
+
+
 
         // Update is called once per frame
         void Update()
