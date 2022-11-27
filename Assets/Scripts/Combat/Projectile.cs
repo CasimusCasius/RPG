@@ -58,9 +58,9 @@ namespace RPG.Combat
 
             if (other.TryGetComponent<Health>(out Health enemy))
             {
+                if (enemy.IsDead()) { return; }
                 StartProjectalHitEffect();
                 projectileSpeed = 0;
-                if (enemy.IsDead()) { return; }
                 enemy.TakeDamage(damageDealer,damage);
 
                 Destroy(gameObject, 0.2f);
