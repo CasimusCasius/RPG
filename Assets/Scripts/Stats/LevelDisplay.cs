@@ -11,11 +11,18 @@ namespace RPG.Stats
         BaseStats baseStats;
 
         private void Start()
-        {
+        { 
             baseStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
+            baseStats.onLevelUp += BaseStats_onLevelUp;
             levelValue.text = String.Format("{0}", baseStats.GetLevel());
         }
-        private void Update()
+
+        private void BaseStats_onLevelUp()
+        {
+            UpdateLevel();
+        }
+
+        private void UpdateLevel()
         {
             levelValue.text = String.Format("{0}", baseStats.GetLevel());
         }

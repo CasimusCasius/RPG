@@ -7,11 +7,12 @@ namespace RPG.Stats
 {
     public class BaseStats : MonoBehaviour
     {
+        public event Action onLevelUp;
         [Range(1,99)]
         [SerializeField] int startingLevel = 1;
         [SerializeField] CharacterClass characterClass = CharacterClass.Grunt;
         [SerializeField] Progression progression = null;
-        
+        [SerializeField] GameObject levelUpVFXPrefab= null;
 
         int currentLevel = 0;
         Experience experience;
@@ -59,13 +60,21 @@ namespace RPG.Stats
 
         private void UpdateLevel()
         {
-            print("Updating");
+            
             int newLevel = CalculateLevel();
             if (newLevel > currentLevel)
             {
                 currentLevel= newLevel;
-                print("Level Updated !!!");
+                LevelUpEffect();
+                onLevelUp();
             }
+        }
+
+        private void LevelUpEffect()
+        {
+            if (levelUpVFXPrefab == null) return;
+
+            Instantiate(levelUpVFXPrefab,transform);
         }
     }
 

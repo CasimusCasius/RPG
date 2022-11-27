@@ -95,6 +95,10 @@ PrefabInstance:
       propertyPath: characterClass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3076810185657246777, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
+      propertyPath: levelUpVFXPrefab
+      value: 
+      objectReference: {fileID: 7111622180221637825, guid: 8a5d7c6feed1ac24d9520fee60349f59, type: 3}
     - target: {fileID: 3955697029563211041, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
       propertyPath: m_Name
       value: Player

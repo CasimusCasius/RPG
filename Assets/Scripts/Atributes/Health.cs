@@ -17,7 +17,8 @@ namespace RPG.Atributes
             if (healthPoints < 0)
             {
                 healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
-            }     
+            }
+            GetComponent<BaseStats>().onLevelUp += BaseStats_onLevelUp;
         }
 
         public void TakeDamage(GameObject damageDealer, float damage)
@@ -58,6 +59,11 @@ namespace RPG.Atributes
             {
                 Die();
             }
+        }
+
+        private void BaseStats_onLevelUp()
+        {
+            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void AwardExperienceTo(GameObject damageDealer)
