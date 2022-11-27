@@ -44,6 +44,12 @@ namespace RPG.Saving
                 formatter.Serialize(stream, state);
             }
         }
+        public void Delete(string saveFile)
+        {
+            string path = GetPathFromSaveFile(saveFile);
+            File.Delete(path);
+            Debug.Log("File " + path + "deleted");
+        }
         private Dictionary<string, object> LoadFile(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);
