@@ -17,14 +17,17 @@ namespace RPG.Stats
         Experience experience;
         private void Start()
         {
-            currentLevel = CalculateLevel();
             experience = GetComponent<Experience>();
+            currentLevel = CalculateLevel();
+
+            if (experience == null) return;
             experience.onExperienceGained += Experience_onExperienceGained;
+            
         }
 
         public int CalculateLevel()
         {
-            Experience experience = GetComponent<Experience>();
+            
             if (experience == null) return startingLevel;
             
             float currentXP= experience.GetExperience();
@@ -56,11 +59,12 @@ namespace RPG.Stats
 
         private void UpdateLevel()
         {
+            print("Updating");
             int newLevel = CalculateLevel();
             if (newLevel > currentLevel)
             {
                 currentLevel= newLevel;
-                print("Level Up !!!");
+                print("Level Updated !!!");
             }
         }
     }
