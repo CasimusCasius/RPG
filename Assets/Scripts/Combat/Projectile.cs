@@ -11,7 +11,7 @@ namespace RPG.Combat
 
         float projectileRange;
         Health target;
-        Fighter damageDealer;
+        GameObject damageDealer;
         float damage = 0;
         float timeOfLife;
 
@@ -37,7 +37,7 @@ namespace RPG.Combat
             this.target = target;
         }
 
-        public void SetProjectile(float damage, float weaponRange, Fighter damageDealer)
+        public void SetProjectile(float damage, float weaponRange, GameObject damageDealer)
         {
             this.damage = damage;
             this.projectileRange = weaponRange;
@@ -61,7 +61,7 @@ namespace RPG.Combat
                 StartProjectalHitEffect();
                 projectileSpeed = 0;
                 if (enemy.IsDead()) { return; }
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damageDealer,damage);
 
                 Destroy(gameObject, 0.2f);
             }

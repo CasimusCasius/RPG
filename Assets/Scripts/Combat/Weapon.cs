@@ -67,7 +67,7 @@ namespace RPG.Combat
 
             return handTransform;
         }
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, Fighter damageDealer)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject damageDealer)
         {
             // TODO arrow parabolic move
             // Z = distance
