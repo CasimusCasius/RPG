@@ -11,21 +11,31 @@ namespace RPG.Atributes
 
         Health health;
 
+
         private void Awake()
         {
+
             health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+            health.onHealthChanged += Health_OnHealthChanged;
+
+
+        }
+        private void Start()
+        {
+
+            UpdatePlayerHealth();
         }
 
-        private void Update()
+        private void Health_OnHealthChanged()
         {
-            UpdatePlayer();
+            UpdatePlayerHealth();
         }
 
 
 
-        private void UpdatePlayer()
+        private void UpdatePlayerHealth()
         {
-            playerHealthValue.text = String.Format("{0:0.0}%", health.GetProcentage());
+            playerHealthValue.text = String.Format("{0:0} / {1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
         }
     }
 }

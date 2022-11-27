@@ -9,31 +9,41 @@ namespace RPG.Atributes
 {
     public class Health : MonoBehaviour, ISaveable
     {
+        public event Action onHealthChanged;
+
         float healthPoints = -1f;
 
         bool isDead;
-        private void Start()
+        private void Awake()
         {
             if (healthPoints < 0)
             {
-                healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+                healthPoints = GetMaxHealthPoints();
+
             }
+        }
+        private void Start()
+        {
+           
             GetComponent<BaseStats>().onLevelUp += BaseStats_onLevelUp;
+            
         }
 
         public void TakeDamage(GameObject damageDealer, float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
+            if(gameObject.tag =="Player") onHealthChanged();
             if (healthPoints == 0)
             {
                 Die();
                 AwardExperienceTo(damageDealer);
             }
+
         }
 
         public float GetProcentage()
         {
-            return (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health)) * 100;
+            return (healthPoints / GetMaxHealthPoints()) * 100;
         }
         private void Die()
         {
@@ -47,6 +57,8 @@ namespace RPG.Atributes
             return isDead;
         }
 
+        public float GetHealthPoints() => healthPoints;
+        public float GetMaxHealthPoints() => GetComponent<BaseStats>().GetStat(Stat.Health);
         public object CaptureState()
         {
             return healthPoints;
@@ -63,13 +75,12 @@ namespace RPG.Atributes
 
         private void BaseStats_onLevelUp()
         {
-            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            healthPoints = GetMaxHealthPoints();
+            onHealthChanged();
         }
 
         private void AwardExperienceTo(GameObject damageDealer)
         {
-           
-
             if (!damageDealer.TryGetComponent<Experience>(out Experience damagerExperience)) return;
             
             damagerExperience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));

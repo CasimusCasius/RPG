@@ -1,6 +1,7 @@
 using RPG.Atributes;
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -8,30 +9,31 @@ namespace RPG.Combat
     public class EnemyHealthDisplay : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI enemyHealthValue;
-        GameObject player;
-        
+        Fighter fighter;
+         
 
         private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            fighter = GameObject.FindGameObjectWithTag("Player").GetComponent<Fighter>();
+
         }
 
         private void Update()
         {
-            UpdateTarget();
+            UpdateTargetHeal();
         }
 
-        private void UpdateTarget()
+        private void UpdateTargetHeal()
         {
-            Health target = player.GetComponent<Fighter>().GetTarget();
-            if (target != null)
-            {
-                enemyHealthValue.text = String.Format("{0:0.0}%", target.GetProcentage());
-            }
-            else
+            
+            if (fighter.GetTarget() == null)
             {
                 enemyHealthValue.text = "N/A";
+                return;
             }
+
+            Health health = fighter.GetTarget().GetComponent<Health>();
+            enemyHealthValue.text = String.Format("{0:0} / {1:0}", health.GetHealthPoints(), health.GetMaxHealthPoints());
         }
     }
 }

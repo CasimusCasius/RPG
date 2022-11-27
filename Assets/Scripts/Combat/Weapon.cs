@@ -40,6 +40,27 @@ namespace RPG.Combat
             }
         }
 
+       
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject damageDealer, float calculateDamage)
+        {
+            // TODO arrow parabolic move
+            // Z = distance
+            // v0 = sqrt(Z * g / sin(2*alpha0)
+            // alphax= arctg(tg(alpha0) - (g*dx/v0*v0*cos(alpha0)*cos(alpha0))) // rotation 
+            // x(t) = v0*t *sin(alpha)
+            // y(t) = v0 *t * sin(alpha) - g*t*t/2
+            // alpha0 = arcsin(Z * g/(v0*v0))/2
+
+
+            Projectile projectile = Instantiate(projectilePrefab, GetSideOfWeapon(rightHand, leftHand).position, Quaternion.identity);
+            projectile.SetTarget(target);
+            projectile.SetProjectile(calculateDamage, attackRange, damageDealer);
+        }
+
+        public bool HasProjectiles() => projectilePrefab != null;
+        public float GetAttackRange() => attackRange;
+        public float GetWeaponDamage() => weaponDamage;
+
         private void DestroyOldWeapon(Transform rightHandTransform, Transform leftHandTransform)
         {
             Transform oldWeapon = rightHandTransform.Find(weaponName);
@@ -67,25 +88,6 @@ namespace RPG.Combat
 
             return handTransform;
         }
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject damageDealer)
-        {
-            // TODO arrow parabolic move
-            // Z = distance
-            // v0 = sqrt(Z * g / sin(2*alpha0)
-            // alphax= arctg(tg(alpha0) - (g*dx/v0*v0*cos(alpha0)*cos(alpha0))) // rotation 
-            // x(t) = v0*t *sin(alpha)
-            // y(t) = v0 *t * sin(alpha) - g*t*t/2
-            // alpha0 = arcsin(Z * g/(v0*v0))/2
-
-
-            Projectile projectile = Instantiate(projectilePrefab, GetSideOfWeapon(rightHand, leftHand).position, Quaternion.identity);
-            projectile.SetTarget(target);
-            projectile.SetProjectile(weaponDamage, attackRange, damageDealer);
-        }
-
-        public bool HasProjectiles() => projectilePrefab != null;
-        public float GetAttackRange() => attackRange;
-        public float GetWeaponDamage() => weaponDamage;
 
     }
 }
