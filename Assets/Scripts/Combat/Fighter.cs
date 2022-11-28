@@ -3,12 +3,13 @@ using RPG.Core;
 using RPG.Movment;
 using RPG.Saving;
 using RPG.Stats;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, IAction, ISaveable
+    public class Fighter : MonoBehaviour, IAction, ISaveable,IModifierProvider
     {
 
         [SerializeField] float timeBeetweenAttacks = 1f;
@@ -84,6 +85,20 @@ namespace RPG.Combat
 
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.GetWeaponDamage();
+            }
+        }
+        public IEnumerable<float> GetProcentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return currentWeapon.GetWeaponProcentageBonus();
+            }
+        }
         public Health GetTarget() => target;
 
         // AnimationEvent
@@ -130,5 +145,7 @@ namespace RPG.Combat
             Weapon weapon = Resources.Load<Weapon>((string)state);
             EquipWeapon(weapon);
         }
+
+        
     }
 }

@@ -10,6 +10,7 @@ namespace RPG.Combat
         [SerializeField] AnimatorOverrideController animatorOverride;
         [SerializeField] float attackRange = 2f;
         [SerializeField] float weaponDamage = 5;
+        [SerializeField] float procentageBonus = 0;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectilePrefab = null;
 
@@ -60,6 +61,7 @@ namespace RPG.Combat
         public bool HasProjectiles() => projectilePrefab != null;
         public float GetAttackRange() => attackRange;
         public float GetWeaponDamage() => weaponDamage;
+        public float GetWeaponProcentageBonus() => procentageBonus;
 
         private void DestroyOldWeapon(Transform rightHandTransform, Transform leftHandTransform)
         {
