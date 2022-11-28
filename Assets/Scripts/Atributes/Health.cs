@@ -16,15 +16,15 @@ namespace RPG.Atributes
         bool isDead;
         private void Awake()
         {
+            
+        }
+        private void Start()
+        {
             if (healthPoints < 0)
             {
                 healthPoints = GetMaxHealthPoints();
 
             }
-        }
-        private void Start()
-        {
-           
             GetComponent<BaseStats>().onLevelUp += BaseStats_onLevelUp;
             
         }
