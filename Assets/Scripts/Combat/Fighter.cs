@@ -38,7 +38,7 @@ namespace RPG.Combat
         private void Start()
         {
             currentWeapon.ForceInit();
-            EquipWeapon(defaultWeapon);
+            
         }
         private void Update()
         {
@@ -128,7 +128,6 @@ namespace RPG.Combat
             }
             else
             {
-                
                 target.TakeDamage(gameObject, damage);
             }
         }
@@ -153,11 +152,13 @@ namespace RPG.Combat
         //Save
         public object CaptureState()
         {
+           
             return currentWeapon.value.name;
         }
 
         public void RestoreState(object state)
         {
+           
             Weapon weapon = Resources.Load<Weapon>((string)state);
             EquipWeapon(weapon);
         }
