@@ -9,14 +9,24 @@ namespace RPG.Stats
     {
         [SerializeField] TextMeshProUGUI levelValue;
         BaseStats baseStats;
-
+        private void Awake()
+        {
+            baseStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
+        }
         private void Start()
         { 
-            baseStats = GameObject.FindGameObjectWithTag("Player").GetComponent<BaseStats>();
-            baseStats.onLevelUp += BaseStats_onLevelUp;
+           
+          
             levelValue.text = String.Format("{0}", baseStats.GetLevel());
         }
-
+        private void OnEnable()
+        {
+            baseStats.onLevelUp += BaseStats_onLevelUp;
+        }
+        private void OnDisable()
+        {
+            baseStats.onLevelUp -= BaseStats_onLevelUp;
+        }
         private void BaseStats_onLevelUp()
         {
             UpdateLevel();

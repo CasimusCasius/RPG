@@ -9,15 +9,14 @@ namespace RPG.Stats
     {
         [SerializeField] TextMeshProUGUI experienceValue;
         Experience playerExpPoints;
+        private void Awake()
+        {
+            playerExpPoints = GameObject.FindGameObjectWithTag("Player").GetComponent<Experience>();
+        }
         void Start()
         {
-            playerExpPoints =GameObject.FindGameObjectWithTag("Player").GetComponent<Experience>();
             experienceValue.text = String.Format( "{0:0}", playerExpPoints.GetExperience());
         }
-
-
-
-        // Update is called once per frame
         void Update()
         {
             experienceValue.text = String.Format("{0:0}", playerExpPoints.GetExperience());

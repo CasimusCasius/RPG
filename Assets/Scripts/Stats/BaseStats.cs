@@ -1,3 +1,4 @@
+using GameDevTV.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,35 +9,49 @@ namespace RPG.Stats
     public class BaseStats : MonoBehaviour
     {
         public event Action onLevelUp;
-        [Range(1,99)]
+        [Range(1, 99)]
         [SerializeField] int startingLevel = 1;
         [SerializeField] CharacterClass characterClass = CharacterClass.Grunt;
         [SerializeField] Progression progression = null;
-        [SerializeField] GameObject levelUpVFXPrefab= null;
+        [SerializeField] GameObject levelUpVFXPrefab = null;
         [SerializeField] bool shouldUseModifiers = false;
 
-        int currentLevel = 0;
+        LazyValue<int> currentLevel;
         Experience experience;
-        private void Start()
+        private void Awake()
         {
             experience = GetComponent<Experience>();
-            currentLevel = CalculateLevel();
-
-            if (experience == null) return;
-            experience.onExperienceGained += Experience_onExperienceGained;
-            
+            currentLevel = new LazyValue<int>(CalculateLevel);
         }
+        private void Start()
+        {
+            currentLevel.ForceInit(); 
+        }
+        
+
+        private void OnEnable()
+        {
+            if (experience != null)
+            {
+                experience.onExperienceGained += Experience_onExperienceGained;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (experience != null)
+            {
+                experience.onExperienceGained -= Experience_onExperienceGained;
+            }
+        }
+
         public int GetLevel()
         {
-            if (currentLevel<1)
-            {
-                currentLevel = CalculateLevel();
-            }
-           return currentLevel;
+            return currentLevel.value;
         }
         public float GetStat(Stat stat)
         {
-            return Mathf.Round((GetBaseStat(stat) + GetAdditiveModifiers(stat))* (1 + GetProcentageModifiers(stat)/100));
+            return Mathf.Round((GetBaseStat(stat) + GetAdditiveModifiers(stat)) * (1 + GetProcentageModifiers(stat) / 100));
         }
 
         private float GetBaseStat(Stat stat)
@@ -99,11 +114,11 @@ namespace RPG.Stats
 
         private void UpdateLevel()
         {
-            
+
             int newLevel = CalculateLevel();
-            if (newLevel > currentLevel)
+            if (newLevel > currentLevel.value)
             {
-                currentLevel= newLevel;
+                currentLevel.value = newLevel;
                 LevelUpEffect();
                 onLevelUp();
             }
@@ -113,7 +128,7 @@ namespace RPG.Stats
         {
             if (levelUpVFXPrefab == null) return;
 
-            Instantiate(levelUpVFXPrefab,transform);
+            Instantiate(levelUpVFXPrefab, transform);
         }
     }
 

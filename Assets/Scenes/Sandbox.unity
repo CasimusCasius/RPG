@@ -5357,7 +5357,7 @@ GameObject:
   - component: {fileID: 781446313}
   - component: {fileID: 781446312}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Terrain-Sanbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

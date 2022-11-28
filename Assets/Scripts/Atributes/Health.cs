@@ -1,7 +1,9 @@
+using GameDevTV.Utils;
 using RPG.Core;
 using RPG.Saving;
 using RPG.Stats;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Atributes
@@ -11,29 +13,32 @@ namespace RPG.Atributes
     {
         public event Action onHealthChanged;
 
-        float healthPoints = -1f;
+        LazyValue<float> healthPoints;
 
         bool isDead;
+
         private void Awake()
         {
-            
+            healthPoints = new LazyValue<float>(GetInitialHealth);
+        }
+
+        private void OnEnable()
+        {
+            GetComponent<BaseStats>().onLevelUp += BaseStats_onLevelUp;
+        }
+        private void OnDisable()
+        {
+            GetComponent<BaseStats>().onLevelUp -= BaseStats_onLevelUp;
         }
         private void Start()
         {
-            if (healthPoints < 0)
-            {
-                healthPoints = GetMaxHealthPoints();
-
-            }
-            GetComponent<BaseStats>().onLevelUp += BaseStats_onLevelUp;
-            
+            healthPoints.ForceInit();
         }
-
         public void TakeDamage(GameObject damageDealer, float damage)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
+            healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
             if(gameObject.tag =="Player") onHealthChanged();
-            if (healthPoints == 0)
+            if (healthPoints.value == 0)
             {
                 Die();
                 AwardExperienceTo(damageDealer);
@@ -43,7 +48,7 @@ namespace RPG.Atributes
 
         public float GetProcentage()
         {
-            return (healthPoints / GetMaxHealthPoints()) * 100;
+            return (healthPoints.value / GetMaxHealthPoints()) * 100;
         }
         private void Die()
         {
@@ -57,25 +62,28 @@ namespace RPG.Atributes
             return isDead;
         }
 
-        public float GetHealthPoints() => healthPoints;
+        public float GetHealthPoints() => healthPoints.value;
         public float GetMaxHealthPoints() => GetComponent<BaseStats>().GetStat(Stat.Health);
         public object CaptureState()
         {
-            return healthPoints;
+            return healthPoints.value;
         }
 
         public void RestoreState(object state)
         {
-            healthPoints = (float)state;
-            if (healthPoints == 0)
+            healthPoints.value = (float)state;
+            if (healthPoints.value == 0)
             {
                 Die();
             }
         }
-
+        private float GetInitialHealth()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
         private void BaseStats_onLevelUp()
         {
-            healthPoints = GetMaxHealthPoints();
+            healthPoints.value = GetMaxHealthPoints();
             onHealthChanged();
         }
 

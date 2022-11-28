@@ -14,16 +14,20 @@ namespace RPG.Atributes
 
         private void Awake()
         {
-
             health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-            health.onHealthChanged += Health_OnHealthChanged;
-
-
         }
         private void Start()
         {
 
             UpdatePlayerHealth();
+        }
+        private void OnEnable()
+        {
+            health.onHealthChanged += Health_OnHealthChanged;
+        }
+        private void OnDisable()
+        {
+            health.onHealthChanged -= Health_OnHealthChanged;
         }
 
         private void Health_OnHealthChanged()

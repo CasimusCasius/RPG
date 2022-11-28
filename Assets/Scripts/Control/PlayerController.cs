@@ -8,10 +8,9 @@ namespace RPG.Control
     public class PlayerController : MonoBehaviour
     {
         Health health;
-
-        private void Start()
+        private void Awake()
         {
-            health= GetComponent<Health>();
+            health = GetComponent<Health>();
         }
         private void Update()
         {

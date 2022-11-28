@@ -22,11 +22,10 @@ namespace RPG.SceneManagment
 
 
 
-        private void Start()
+        private void Awake()
         {
             FindObjectOfType<SavingWrapper>();
         }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Player")
