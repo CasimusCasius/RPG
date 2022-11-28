@@ -1,7 +1,8 @@
+using RPG.Atributes;
 using RPG.Core;
+using RPG.Saving;
 using UnityEngine;
 using UnityEngine.AI;
-using RPG.Saving;
 
 namespace RPG.Movment
 {
@@ -19,7 +20,7 @@ namespace RPG.Movment
         }
         void Update()
         {
-            navMeshAgent.enabled= !health.IsDead();
+            navMeshAgent.enabled = !health.IsDead();
             UpdateAnimator();
         }
         private void UpdateAnimator()
@@ -31,7 +32,7 @@ namespace RPG.Movment
         }
         public void Cancel()
         {
-            navMeshAgent.isStopped= true;
+            navMeshAgent.isStopped = true;
         }
         /// <summary>
         /// Starts Move action Canceling other Actions
@@ -39,9 +40,9 @@ namespace RPG.Movment
         /// <param name="designation"></param>
         public void StartMoveAction(Vector3 designation, float speedFraction)
         {
-                GetComponent<ActionScheduler>().StartAction(this);
-                
-                MoveTo(designation,speedFraction);
+            GetComponent<ActionScheduler>().StartAction(this);
+
+            MoveTo(designation, speedFraction);
         }
         public void MoveTo(Vector3 destination, float speedFraction)
         {
@@ -52,15 +53,14 @@ namespace RPG.Movment
 
         public object CaptureState()
         {
-            return new SerializableVector3 (transform.position);
+            return new SerializableVector3(transform.position);
         }
 
         public void RestoreState(object state)
         {
-            SerializableVector3 position = (SerializableVector3) state;
-            GetComponent<NavMeshAgent>().enabled= false;
-            transform.position = position.ToVector();
-            GetComponent<NavMeshAgent>().enabled = true;
+            Vector3 position = ((SerializableVector3)state).ToVector3();
+            GetComponent<NavMeshAgent>().Warp(position);
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
     }
 }

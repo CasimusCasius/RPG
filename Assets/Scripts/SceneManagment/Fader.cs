@@ -1,23 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+
 namespace RPG.SceneManagment
 {
     public class Fader : MonoBehaviour
     {
         CanvasGroup canvasGroup;
-        
-        private void Start()
+
+        private void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
         }
         public IEnumerator FadeOut(float time)
         {
-            while(canvasGroup.alpha < 1)
+            while (canvasGroup.alpha < 1)
             {
                 canvasGroup.alpha += Time.deltaTime / time;
-                yield return null; 
+                yield return null;
             }
         }
         public IEnumerator FadeIn(float time)
@@ -27,6 +26,10 @@ namespace RPG.SceneManagment
                 canvasGroup.alpha -= Time.deltaTime / time;
                 yield return null;
             }
+        }
+        public void FadeOutImmmediate()
+        {
+            canvasGroup.alpha = 1;
         }
     }
 }

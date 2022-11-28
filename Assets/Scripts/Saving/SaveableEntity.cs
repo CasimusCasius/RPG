@@ -1,9 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using RPG.Core;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
 
 namespace RPG.Saving
 {
@@ -11,9 +9,9 @@ namespace RPG.Saving
     public class SaveableEntity : MonoBehaviour
     {
         [SerializeField] string uniqueIdentifier = "";
-        static Dictionary<string, SaveableEntity> globalLookup = new Dictionary<string, SaveableEntity>();
+        static Dictionary<string,SaveableEntity> globalLookup = new Dictionary<string,SaveableEntity>();
 
-        public string GetUniqueIdentifier()
+        public string GetUniqeIdentifier()
         {
             return uniqueIdentifier;
         }
@@ -33,23 +31,25 @@ namespace RPG.Saving
             Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
             foreach (ISaveable saveable in GetComponents<ISaveable>())
             {
-                string typeString = saveable.GetType().ToString();
-                if (stateDict.ContainsKey(typeString))
-                {
-                    saveable.RestoreState(stateDict[typeString]);
-                }
-            }
-        }
 
+                string typeString = saveable.GetType().ToString();
+
+                if (stateDict.ContainsKey(typeString))
+                    saveable.RestoreState(stateDict[typeString]);
+            }
+
+        }
+        #region unity_editor
 #if UNITY_EDITOR
-        private void Update() {
+        private void Update()
+        {
             if (Application.IsPlaying(gameObject)) return;
             if (string.IsNullOrEmpty(gameObject.scene.path)) return;
 
             SerializedObject serializedObject = new SerializedObject(this);
             SerializedProperty property = serializedObject.FindProperty("uniqueIdentifier");
-            
-            if (string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue))
+
+            if (string.IsNullOrEmpty(property.stringValue) || !IsUnique(property.stringValue) )
             {
                 property.stringValue = System.Guid.NewGuid().ToString();
                 serializedObject.ApplyModifiedProperties();
@@ -58,26 +58,25 @@ namespace RPG.Saving
             globalLookup[property.stringValue] = this;
         }
 #endif
-
+        #endregion
         private bool IsUnique(string candidate)
         {
             if (!globalLookup.ContainsKey(candidate)) return true;
-
-            if (globalLookup[candidate] == this) return true;
-
+            if (globalLookup[candidate] == this ) return true;
             if (globalLookup[candidate] == null)
             {
                 globalLookup.Remove(candidate);
                 return true;
             }
 
-            if (globalLookup[candidate].GetUniqueIdentifier() != candidate)
+            if (globalLookup[candidate].GetUniqeIdentifier() != candidate)
             {
                 globalLookup.Remove(candidate);
                 return true;
             }
 
-            return false;
+                return false;
         }
+
     }
 }
