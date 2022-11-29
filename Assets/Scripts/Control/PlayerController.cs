@@ -4,6 +4,7 @@ using RPG.Movment;
 using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 namespace RPG.Control
 {
@@ -20,7 +21,7 @@ namespace RPG.Control
         }
 
         [SerializeField] CursorMapping[] cursorMappings = null;
-
+        [SerializeField] float maxDistanceToNavMeshPoint = 1f;
 
         private void Awake()
         {
@@ -81,22 +82,42 @@ namespace RPG.Control
             }
             return false;
         }
-        private static Ray GetMouseRay() => Camera.main.ScreenPointToRay(Input.mousePosition);
-
         private bool InteractWithMovement()
         {
-            RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+            
+            Vector3 target;
+            bool hasHit = RaycastNavMesh(out target);
             if (hasHit)
             {
                 if (Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>().StartMoveAction(hit.point, 1f);
+                    GetComponent<Mover>().StartMoveAction(target, 1f);
                 }
                 SetCursor(CursorType.Movement);
             }
+            else 
+            {
+                SetCursor(CursorType.None);
+            }
+            
             return hasHit;
         }
+
+        private bool RaycastNavMesh(out Vector3 target)
+        {
+            RaycastHit raycastHit;
+            target = new Vector3();
+            if (!Physics.Raycast(GetMouseRay(), out raycastHit)) return false;
+         
+            NavMeshHit hit;
+            bool hasHit = NavMesh.SamplePosition(raycastHit.point,out hit, maxDistanceToNavMeshPoint, NavMesh.AllAreas);
+            if(!hasHit) return false;
+
+            target = hit.position;   
+            return true;
+        }
+
+        private static Ray GetMouseRay() => Camera.main.ScreenPointToRay(Input.mousePosition);
         private CursorMapping GetCursorMapping(CursorType type)
         {
             foreach (CursorMapping cursor in cursorMappings)
