@@ -13,7 +13,7 @@ namespace RPG.Combat
 
     public class Fighter : MonoBehaviour, IAction, ISaveable,IModifierProvider
     {
-
+        
         [SerializeField] float timeBeetweenAttacks = 1f;
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
@@ -44,7 +44,7 @@ namespace RPG.Combat
         {
             timeSinceLastAttack += Time.deltaTime;
             if (target == null) return;
-
+            if (target.gameObject.tag != "Player") 
             if (target.IsDead())
             {
                 Cancel();

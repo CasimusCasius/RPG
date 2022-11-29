@@ -1,4 +1,6 @@
+using RPG.Atributes;
 using RPG.Control;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
@@ -10,11 +12,13 @@ namespace RPG.Combat
     public class CombatTarget : MonoBehaviour, IRaycastable
     {
         
+        public event Action OnAttacked;
 
         public bool HandleRaycast(PlayerController callingControler)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                OnAttacked?.Invoke();
                 Attack(callingControler.GetComponent<Fighter>());
             }
             return true;

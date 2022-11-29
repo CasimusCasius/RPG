@@ -13,6 +13,7 @@ namespace RPG.Atributes
     public class Health : MonoBehaviour, ISaveable
     {
         public event Action onHealthChanged;
+        public event Action onDead;
 
         [SerializeField] UnityEvent<float> takeDamage;
 
@@ -42,14 +43,17 @@ namespace RPG.Atributes
             
             healthPoints.value = Mathf.Max(healthPoints.value - damage, 0);
 
-            if(gameObject.tag =="Player") onHealthChanged();
+            //if(gameObject.tag =="Player") 
+                
             if (healthPoints.value == 0)
             {
                 Die();
+               
                 AwardExperienceTo(damageDealer);
             }
             else
             {
+                onHealthChanged?.Invoke();
                 takeDamage.Invoke(damage);
             }
 
@@ -62,6 +66,7 @@ namespace RPG.Atributes
         private void Die()
         {
             if (isDead) return;
+            onDead?.Invoke();
             isDead = true;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
@@ -93,7 +98,7 @@ namespace RPG.Atributes
         private void BaseStats_onLevelUp()
         {
             healthPoints.value = GetMaxHealthPoints();
-            onHealthChanged();
+            onHealthChanged?.Invoke();
         }
 
         private void AwardExperienceTo(GameObject damageDealer)
