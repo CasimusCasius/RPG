@@ -3,18 +3,14 @@ using RPG.Atributes;
 using RPG.Movment;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
         Health health;
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat
-        }
+       
         [System.Serializable]
         struct CursorMapping
         {
@@ -32,31 +28,55 @@ namespace RPG.Control
         }
         private void Update()
         {
+
+            if (InteractWithUI()) return;
             if (health.IsDead())
             {
+                SetCursor(CursorType.None);
                 return;
             }
-            if (InteractWithCombat()) return;
+            if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
 
             SetCursor(CursorType.None);
         }
-        private bool InteractWithCombat()
+
+        private bool InteractWithComponent()
+        {
+            ;
+
+            foreach (RaycastHit hit in RaycastAllSorted())
+            {
+                IRaycastable[] raycastables =  hit.transform.GetComponents<IRaycastable>();
+                foreach (var raycastable in raycastables)
+                {
+                    if (raycastable.HandleRaycast(this))
+                    {
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private RaycastHit[] RaycastAllSorted()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-
-            foreach (RaycastHit hit in hits)
+            float[] distances = new float[hits.Length];
+            for (int i =0 ; i < hits.Length; i++)  
             {
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;
+                distances[i] =  hits[i].distance;
+            }
+            Array.Sort(distances, hits);
 
-                if (!GetComponent<Fighter>().CanAttack(target.gameObject)) continue;
+            return hits;
+        }
 
-                if (Input.GetMouseButton(0))
-                {
-                    GetComponent<Fighter>().Attack(target.gameObject);
-                }
-                SetCursor(CursorType.Combat);
+        private bool InteractWithUI()
+        {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
                 return true;
             }
             return false;
@@ -81,14 +101,14 @@ namespace RPG.Control
         {
             foreach (CursorMapping cursor in cursorMappings)
             {
-                if (cursor.type==type) return cursor;
+                if (cursor.type == type) return cursor;
             }
             return cursorMappings[0];
         }
         private void SetCursor(CursorType type)
         {
             CursorMapping mapping = GetCursorMapping(type);
-            Cursor.SetCursor(mapping.texture,mapping.hotspot,CursorMode.Auto);
+            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
         }
     }
 }
