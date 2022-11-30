@@ -1,3 +1,5 @@
+using RPG.Control;
+using RPG.Core;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,21 +22,20 @@ namespace RPG.SceneManagment
         [SerializeField] float fadeInTime = 2f;
         [SerializeField] float fadeWaitTime = 0.5f;
 
-
+       
 
         private void Awake()
         {
             FindObjectOfType<SavingWrapper>();
+            
         }
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Player")
             {
                 StartCoroutine(Transition());
-
             }
         }
-
         private IEnumerator Transition()
         {
             if (portalToSceneIndex < 0)
@@ -46,20 +47,24 @@ namespace RPG.SceneManagment
             DontDestroyOnLoad(gameObject);
             SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
             Fader fader = FindObjectOfType<Fader>();
+
+            DisablePlayerControl();
             yield return fader.FadeOut(fadeOutTime);
 
             savingWrapper.Save();
             yield return SceneManager.LoadSceneAsync(portalToSceneIndex);
+            DisablePlayerControl();
             savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
             savingWrapper.Save();
             yield return new WaitForSeconds(fadeWaitTime);
-            yield return fader.FadeIn(fadeInTime);
+            fader.FadeIn(fadeInTime);
+
+            EnablePlayerControl();
             Destroy(gameObject);
         }
-
         private void UpdatePlayer(Portal otherPortal)
         {
             GameObject player = GameObject.FindWithTag("Player");
@@ -68,7 +73,6 @@ namespace RPG.SceneManagment
 
             player.transform.rotation = otherPortal.spawnPoint.rotation;
         }
-
         private Portal GetOtherPortal()
         {
 
@@ -81,6 +85,22 @@ namespace RPG.SceneManagment
                 }
             }
             return null;
+        }
+
+        private void DisablePlayerControl()
+        {
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player == null) { return; }
+            player.GetComponent<ActionScheduler>().CancelCurrentAction();
+            player.GetComponent<PlayerController>().enabled = false;
+        }
+
+        private void EnablePlayerControl()
+        {
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player == null) { return; }
+
+            player.GetComponent<PlayerController>().enabled = true;
         }
     }
 }

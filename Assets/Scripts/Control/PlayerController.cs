@@ -45,7 +45,7 @@ namespace RPG.Control
 
         private bool InteractWithComponent()
         {
-            ;
+           
 
             foreach (RaycastHit hit in RaycastAllSorted())
             {
