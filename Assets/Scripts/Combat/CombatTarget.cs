@@ -1,5 +1,6 @@
 using RPG.Atributes;
 using RPG.Control;
+using RPG.Movment;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace RPG.Combat
 
         public bool HandleRaycast(PlayerController callingControler)
         {
+            if (!callingControler.GetComponent<Fighter>().CanAttack(this.gameObject)) return false;
+
             if (Input.GetMouseButtonDown(0))
             {
                 OnAttacked?.Invoke();
