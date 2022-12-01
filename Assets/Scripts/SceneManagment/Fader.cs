@@ -15,7 +15,7 @@ namespace RPG.SceneManagment
         public Coroutine Fade(float target,float time)
         {
             CancelCurrentCoroutine();
-            currentActiveCoroutine = StartCoroutine(FadeRoutine(target, -time));
+            currentActiveCoroutine = StartCoroutine(FadeRoutine(target, time));
             return currentActiveCoroutine;
         }
         public Coroutine FadeOut(float time)

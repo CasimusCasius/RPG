@@ -16,6 +16,7 @@ namespace RPG.Atributes
         public event Action onDead;
 
         [SerializeField] UnityEvent<float> takeDamage;
+        [SerializeField] UnityEvent onDeath;
 
         LazyValue<float> healthPoints;
 
@@ -47,15 +48,16 @@ namespace RPG.Atributes
                 
             if (healthPoints.value == 0)
             {
+                onDeath.Invoke();
                 Die();
-               
                 AwardExperienceTo(damageDealer);
             }
             else
             {
-                onHealthChanged?.Invoke();
+                
                 takeDamage.Invoke(damage);
             }
+            onHealthChanged?.Invoke();
 
         }
 
@@ -66,7 +68,9 @@ namespace RPG.Atributes
         private void Die()
         {
             if (isDead) return;
+            
             onDead?.Invoke();
+            
             isDead = true;
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
