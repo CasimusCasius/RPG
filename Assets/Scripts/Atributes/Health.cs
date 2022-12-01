@@ -112,5 +112,10 @@ namespace RPG.Atributes
             damagerExperience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
 
+        public void Cure(float healthToRestore)
+        {
+            healthPoints.value = Mathf.Min(healthPoints.value + healthToRestore, GetMaxHealthPoints());
+            onHealthChanged?.Invoke();
+        }
     }
 }
