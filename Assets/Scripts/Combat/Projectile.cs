@@ -1,5 +1,6 @@
 using RPG.Atributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RPG.Combat
 {
@@ -8,6 +9,11 @@ namespace RPG.Combat
         [SerializeField] float projectileSpeed = 20;
         [SerializeField] bool isHoming = false;
         [SerializeField] GameObject hitEffect = null;
+        [SerializeField] UnityEvent onHit;
+        [SerializeField] AudioSource hitSFX = null;
+        [SerializeField] AudioSource launchSFX= null;
+            
+
 
         float projectileRange;
         Health target;
@@ -17,7 +23,6 @@ namespace RPG.Combat
 
         private void Start()
         {
-
             transform.LookAt(GetAimLocation());
             float timeOfLifeFactor = 1.5f;
             timeOfLife = (1 / projectileSpeed) * projectileRange * timeOfLifeFactor;
@@ -55,14 +60,13 @@ namespace RPG.Combat
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject == damageDealer.gameObject) { return; }
-
+            projectileSpeed = 0;
             if (other.TryGetComponent<Health>(out Health enemy))
             {
                 if (enemy.IsDead()) { return; }
                 StartProjectalHitEffect();
                 projectileSpeed = 0;
-                enemy.TakeDamage(damageDealer,damage);
-
+                enemy.TakeDamage(damageDealer, damage);
                 Destroy(gameObject, 0.2f);
             }
 
@@ -71,6 +75,7 @@ namespace RPG.Combat
 
         private void StartProjectalHitEffect()
         {
+            onHit?.Invoke();
             if (hitEffect == null) { return; }
 
             RaycastHit hit;

@@ -31,7 +31,7 @@ namespace RPG.SceneManagment
 
             if (Input.GetKeyDown(KeyCode.F8))
             {
-                Load();
+                StartCoroutine(LoadLastScene());
             }
             if (Input.GetKeyDown(KeyCode.F10))
             {
