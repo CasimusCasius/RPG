@@ -1,13 +1,10 @@
 using RPG.Control;
 using RPG.Core;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 
 namespace RPG.Cinemacics
-{ 
+{
     public class CinematicControlRemover : MonoBehaviour
     {
         GameObject player;
@@ -29,7 +26,7 @@ namespace RPG.Cinemacics
 
         void DisableControl(PlayableDirector playableDirector)
         {
-            if(player == null) { return; }
+            if (player == null) { return; }
             player.GetComponent<ActionScheduler>().CancelCurrentAction();
             player.GetComponent<PlayerController>().enabled = false;
         }
@@ -37,10 +34,10 @@ namespace RPG.Cinemacics
         void EnableControl(PlayableDirector playableDirector)
         {
             if (player == null) { return; }
-            
+
             player.GetComponent<PlayerController>().enabled = true;
         }
-        
+
 
     }
 }

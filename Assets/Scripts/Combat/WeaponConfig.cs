@@ -1,10 +1,11 @@
 using RPG.Atributes;
+using RPG.Libraries.Inventories;
 using UnityEngine;
 
 namespace RPG.Combat
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make new Weapon", order = 0)]
-    public class WeaponConfig : ScriptableObject
+    public class WeaponConfig : EquipableItem
     {
         [SerializeField] Weapon equippedPrefab = null;
         [SerializeField] AnimatorOverrideController animatorOverride;
@@ -29,9 +30,9 @@ namespace RPG.Combat
                 Transform handTransform = GetSideOfWeapon(rightHandTransform, leftHandTransform);
                 weapon = Instantiate(equippedPrefab, handTransform);
                 weapon.gameObject.name = weaponName;
-                
+
             }
-           
+
             var overrideControler = animator.runtimeAnimatorController as AnimatorOverrideController;
             if (animatorOverride != null)
             {
@@ -45,7 +46,7 @@ namespace RPG.Combat
             return weapon;
         }
 
-       
+
         public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject damageDealer, float calculateDamage)
         {
             // TODO arrow parabolic move

@@ -22,12 +22,12 @@ namespace RPG.SceneManagment
         [SerializeField] float fadeInTime = 2f;
         [SerializeField] float fadeWaitTime = 0.5f;
 
-       
+
 
         private void Awake()
         {
             FindObjectOfType<SavingWrapper>();
-            
+
         }
         private void OnTriggerEnter(Collider other)
         {

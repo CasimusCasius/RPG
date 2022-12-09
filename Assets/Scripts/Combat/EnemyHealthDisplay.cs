@@ -1,7 +1,6 @@
 using RPG.Atributes;
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -10,7 +9,7 @@ namespace RPG.Combat
     {
         [SerializeField] TextMeshProUGUI enemyHealthValue;
         Fighter fighter;
-         
+
 
         private void Awake()
         {
@@ -25,7 +24,7 @@ namespace RPG.Combat
 
         private void UpdateTargetHeal()
         {
-            
+
             if (fighter.GetTarget() == null)
             {
                 enemyHealthValue.text = "N/A";

@@ -1,11 +1,10 @@
-using RPG.Combat;
 using RPG.Atributes;
-using RPG.Movment;
-using UnityEngine;
+using RPG.Libraries.Inventories;
+using RPG.Movement;
 using System;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.AI;
-using RPG.Inventories;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
@@ -23,7 +22,7 @@ namespace RPG.Control
 
         [SerializeField] CursorMapping[] cursorMappings = null;
         [SerializeField] float maxDistanceToNavMeshPoint = 1f;
-        [SerializeField] float castRadius=0.5f;
+        [SerializeField] float castRadius = 0.5f;
 
         bool isDraggingUI = false;
 
@@ -74,7 +73,7 @@ namespace RPG.Control
         }
         private RaycastHit[] RaycastAllSorted()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(),castRadius);
+            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), castRadius);
             float[] distances = new float[hits.Length];
             for (int i = 0; i < hits.Length; i++)
             {
@@ -90,7 +89,7 @@ namespace RPG.Control
             if (Input.GetMouseButtonUp(0)) isDraggingUI = false;
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                if(Input.GetMouseButtonDown(0)) isDraggingUI = true;
+                if (Input.GetMouseButtonDown(0)) isDraggingUI = true;
                 SetCursor(CursorType.UI);
                 return true;
             }

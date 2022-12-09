@@ -1,14 +1,13 @@
 using RPG.Atributes;
 using RPG.Combat;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] Transform foregroundImage;
-    [SerializeField] float timeToHideHealthBar=3f;
+    [SerializeField] float timeToHideHealthBar = 3f;
     [SerializeField] Canvas rootCanvas;
     Health health;
     CombatTarget combatTarget;
@@ -28,14 +27,14 @@ public class HealthBar : MonoBehaviour
     }
     private void Update()
     {
-        timeBeetwenAttacks+= Time.deltaTime;
+        timeBeetwenAttacks += Time.deltaTime;
         if (timeBeetwenAttacks > timeToHideHealthBar) HideHealBar();
     }
 
     private void OnDisable()
     {
-        health.onHealthChanged-= Health_onHealthChanged;
-        health.onDead-= Die;
+        health.onHealthChanged -= Health_onHealthChanged;
+        health.onDead -= Die;
         combatTarget.OnAttacked -= CombatTarget_onAttacked;
     }
     private void CombatTarget_onAttacked()
@@ -57,7 +56,7 @@ public class HealthBar : MonoBehaviour
     }
     private void ShowHealthBar()
     {
-        
+
         rootCanvas.enabled = true;
     }
     private void HideHealBar()

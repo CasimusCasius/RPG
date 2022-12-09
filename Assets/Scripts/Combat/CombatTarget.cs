@@ -1,10 +1,5 @@
-using RPG.Atributes;
 using RPG.Control;
-using RPG.Movment;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 namespace RPG.Combat
@@ -12,7 +7,7 @@ namespace RPG.Combat
     [RequireComponent(typeof(Atributes.Health))]
     public class CombatTarget : MonoBehaviour, IRaycastable
     {
-        
+
         public event Action OnAttacked;
 
         public bool HandleRaycast(PlayerController callingControler)
@@ -38,7 +33,7 @@ namespace RPG.Combat
             if (Input.GetMouseButton(0))
             {
                 fighter.Attack(gameObject);
-            }   
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
-using RPG.Saving;
+using RPG.Libraries.Saving;
 using System.Collections;
-using System.Data;
 using UnityEngine;
 
 namespace RPG.SceneManagment
@@ -13,7 +12,7 @@ namespace RPG.SceneManagment
 
         private void Awake()
         {
-            StartCoroutine (LoadLastScene());
+            StartCoroutine(LoadLastScene());
         }
         private IEnumerator LoadLastScene()
         {

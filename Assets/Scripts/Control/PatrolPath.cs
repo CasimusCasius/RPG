@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 namespace RPG.Control
 {
@@ -8,7 +6,7 @@ namespace RPG.Control
         private void OnDrawGizmos()
         {
             const float WAYPOINT_GIZMO_RADIUS = 0.3f;
-            for (int i = 0; i < transform.childCount ; i++)
+            for (int i = 0; i < transform.childCount; i++)
             {
                 int j = GetNextIndex(i, transform.childCount);
 
@@ -30,6 +28,6 @@ namespace RPG.Control
             return transform.GetChild(i).position;
         }
 
-        
+
     }
 }

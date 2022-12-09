@@ -11,8 +11,8 @@ namespace RPG.Combat
         [SerializeField] GameObject hitEffect = null;
         [SerializeField] UnityEvent onHit;
         [SerializeField] AudioSource hitSFX = null;
-        [SerializeField] AudioSource launchSFX= null;
-            
+        [SerializeField] AudioSource launchSFX = null;
+
 
 
         float projectileRange;
