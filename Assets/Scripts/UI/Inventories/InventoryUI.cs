@@ -1,3 +1,4 @@
+using GameDevTV.Utils;
 using RPG.Inventories;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,18 +14,22 @@ namespace RPG.UI.Inventories
         private void Awake()
         {
             playerInventory = Inventory.GetPlayerInventory();
+                
         }
         private void OnEnable()
         {
             playerInventory.inventoryUpdated += Redraw;
         }
-
+        private void OnDisable()
+        {
+            playerInventory.inventoryUpdated -= Redraw;
+        }
         private void Start()
         {
             Redraw();
         }
 
-        private void Redraw()
+        public void Redraw()
         {
             foreach (Transform child in transform)
             {

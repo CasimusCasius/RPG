@@ -1,35 +1,39 @@
-using System.Collections;
 using RPG.Saving;
+using System.Collections;
+using System.Data;
 using UnityEngine;
 
-namespace RPG.SceneManagement
+namespace RPG.SceneManagment
 {
     public class SavingWrapper : MonoBehaviour
     {
-        [SerializeField] KeyCode saveKey = KeyCode.S;
-        [SerializeField] KeyCode loadKey = KeyCode.L;
-        [SerializeField] KeyCode deleteKey = KeyCode.Delete;
-        const string defaultSaveFile = "save";
-        
-        private void Awake() 
+        public const string DEFAULT_SAVE_FILE = "quicksave";
+
+        [SerializeField] float fadeInTime = 0.5f;
+
+        private void Awake()
         {
-            StartCoroutine(LoadLastScene());
+            StartCoroutine (LoadLastScene());
         }
-
-        private IEnumerator LoadLastScene() {
-            yield return GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile);
+        private IEnumerator LoadLastScene()
+        {
+            yield return GetComponent<SavingSystem>().LoadLastScene(DEFAULT_SAVE_FILE);
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmmediate();
+            yield return fader.FadeIn(fadeInTime);
         }
-
-        private void Update() {
-            if (Input.GetKeyDown(saveKey))
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F5))
             {
                 Save();
             }
-            if (Input.GetKeyDown(loadKey))
+
+            if (Input.GetKeyDown(KeyCode.F8))
             {
-                Load();
+                StartCoroutine(LoadLastScene());
             }
-            if (Input.GetKeyDown(deleteKey))
+            if (Input.GetKeyDown(KeyCode.F10))
             {
                 Delete();
             }
@@ -37,17 +41,16 @@ namespace RPG.SceneManagement
 
         public void Load()
         {
-            StartCoroutine(GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile));
+            GetComponent<SavingSystem>().Load(DEFAULT_SAVE_FILE);
         }
 
         public void Save()
         {
-            GetComponent<SavingSystem>().Save(defaultSaveFile);
+            GetComponent<SavingSystem>().Save(DEFAULT_SAVE_FILE);
         }
-
         public void Delete()
         {
-            GetComponent<SavingSystem>().Delete(defaultSaveFile);
+            GetComponent<SavingSystem>().Delete(DEFAULT_SAVE_FILE);
         }
     }
 }

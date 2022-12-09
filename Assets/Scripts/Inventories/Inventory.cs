@@ -22,16 +22,13 @@ namespace RPG.Inventories
 
         public static Inventory GetPlayerInventory()
         {
-            var player = GameObject.FindGameObjectWithTag("Player");
-            return player.GetComponent<Inventory>();
+            var player = GameObject.FindGameObjectWithTag("Player").GetComponent<Inventory>();
+            return player;
         }
-
         private void Awake()
         {
             slots = new InventorySlot[invetorySize];
         }
-
-
         public bool HasSpaceFor(InventoryItem item)
         {
             return FindSlot(item) >= 0;

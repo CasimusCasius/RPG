@@ -1,3 +1,5 @@
+using RPG.Inventories;
+using RPG.UI.Inventories;
 using UnityEngine;
 
 
@@ -7,6 +9,7 @@ namespace RPG.UI
     {
         [SerializeField] KeyCode showHideKey = KeyCode.I;
         [SerializeField] GameObject objectToHide = null;
+        [SerializeField] InventoryUI inventorySlots = null;
 
         private void Start()
         {
@@ -23,7 +26,9 @@ namespace RPG.UI
 
         private void ShowHide()
         {
+            
             objectToHide.SetActive(!objectToHide.activeSelf);
+            inventorySlots.Redraw();
         }
     }
 }
