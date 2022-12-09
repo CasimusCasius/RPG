@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RPG.Libraries.Inventories
 {
-    [CreateAssetMenu(menuName = "Inventory/Equipment")]
+    [CreateAssetMenu(menuName = "Game/Inventory/Equipment")]
     public class EquipableItem : InventoryItem
     {
         [SerializeField] EquipLocation allowedEquipLocation = EquipLocation.Weapon;

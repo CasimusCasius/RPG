@@ -11,7 +11,7 @@ using UnityEngine;
 namespace RPG.Combat
 {
 
-    public class Fighter : MonoBehaviour, IAction, ISaveable, IModifierProvider
+    public class Fighter : MonoBehaviour, IAction, ISaveable
     {
 
         [SerializeField] float timeBeetweenAttacks = 1f;
@@ -121,20 +121,6 @@ namespace RPG.Combat
             currentWeaponConfig = weapon;
             currentWeapon.value = AttachWeapon(weapon);
 
-        }
-        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return currentWeaponConfig.GetWeaponDamage();
-            }
-        }
-        public IEnumerable<float> GetProcentageModifiers(Stat stat)
-        {
-            if (stat == Stat.Damage)
-            {
-                yield return currentWeaponConfig.GetWeaponProcentageBonus();
-            }
         }
         public Health GetTarget() => target;
 

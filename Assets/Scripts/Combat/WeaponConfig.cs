@@ -1,17 +1,19 @@
 using RPG.Atributes;
 using RPG.Libraries.Inventories;
+using RPG.Stats;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make new Weapon", order = 0)]
-    public class WeaponConfig : EquipableItem
+    [CreateAssetMenu(fileName = "Weapon", menuName = "Game/Inventory/Weapons/Make new Weapon", order = 0)]
+    public class WeaponConfig : EquipableItem,IModifierProvider
     {
         [SerializeField] Weapon equippedPrefab = null;
         [SerializeField] AnimatorOverrideController animatorOverride;
         [SerializeField] float attackRange = 2f;
         [SerializeField] float weaponDamage = 5;
-        [SerializeField] float procentageBonus = 0;
+        [SerializeField] float percentageBonus = 0;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectilePrefab = null;
 
@@ -66,8 +68,22 @@ namespace RPG.Combat
         public bool HasProjectiles() => projectilePrefab != null;
         public float GetAttackRange() => attackRange;
         public float GetWeaponDamage() => weaponDamage;
-        public float GetWeaponProcentageBonus() => procentageBonus;
+        public float GetWeaponProcentageBonus() => percentageBonus;
 
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return weaponDamage;
+            }
+        }
+        public IEnumerable<float> GetProcentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return percentageBonus;
+            }
+        }
         private void DestroyOldWeapon(Transform rightHandTransform, Transform leftHandTransform)
         {
             Transform oldWeapon = rightHandTransform.Find(weaponName);
@@ -96,5 +112,6 @@ namespace RPG.Combat
             return handTransform;
         }
 
+       
     }
 }

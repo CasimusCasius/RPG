@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RPG.Libraries.Inventories
 {
-    [CreateAssetMenu(menuName = "Inventory/Action")]
+    [CreateAssetMenu(menuName = "Game/Inventory/Action")]
     public class ActionItem : InventoryItem
     {
         [SerializeField] bool consumable = false;
