@@ -10,17 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91b098574f433d74596e1ea1b70ac693, type: 3}
-  m_Name: New Dialogue
+  m_Name: New Dialogue 1
   m_EditorClassIdentifier: 
   nodes:
-  - uniqueID: z
-    text: Dude
+  - uniqueID: 
+    text: Hello
     NextDialogueNodes:
     - 
+  - uniqueID: 
+    text: Hello Sam,
+    NextDialogueNodes:
     - 
   - uniqueID: 
-    text: 
-    NextDialogueNodes: []
+    text: Hello Bob,
+    NextDialogueNodes:
+    - 
   - uniqueID: 
-    text: 
-    NextDialogueNodes: []
+    text: Hello Jane
+    NextDialogueNodes:
+    - 
