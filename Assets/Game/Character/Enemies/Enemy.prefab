@@ -124,6 +124,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1355111928587040860, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
+      propertyPath: dropLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c3640608959fc346833af0a4abade32, type: 2}
     - target: {fileID: 2431178679580950163, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
       propertyPath: m_RootOrder
       value: 0

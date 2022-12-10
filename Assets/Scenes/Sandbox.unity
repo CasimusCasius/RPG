@@ -15959,6 +15959,10 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: 3b943f24-6e64-483d-89c3-ae43d5269d97
       objectReference: {fileID: 0}
+    - target: {fileID: 6102014525413612810, guid: cb344e7a2fb5f3b42b9c28fa54bd098e, type: 3}
+      propertyPath: scatterDistance
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7484330431952886725, guid: cb344e7a2fb5f3b42b9c28fa54bd098e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -17891,6 +17895,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: howManyDropsMax
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: scatterDistance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: dropLibrary.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: dropLibrary.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 62ffedc1ce4ca0d4399d9ca1b1ea5833, type: 2}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: dropLibrary.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: ee4fc3a7fcdc0864a985b6933279dd91, type: 2}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: dropLibrary.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: f09e31f1bb57a514c80db0819fa13310, type: 2}
+    - target: {fileID: 6804999854760330724, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
+      propertyPath: dropLibrary.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7746edc7445c47147834d05419e7fd9b, type: 2}
     - target: {fileID: 6977495866370799895, guid: 22bef93b9ea7ee04da75cbce1b6c1721, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -1,4 +1,5 @@
 using RPG.Libraries.Inventories;
+using RPG.Stats;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,18 +13,17 @@ namespace RPG.Inventories
 
         [Tooltip("Radius of Dropped Items with dropper in center")]
         [SerializeField]float scatterDistance = 1.0f;
-        [SerializeField] InventoryItem[] dropLibrary;
-        [SerializeField] int howManyDropsMax = 5;
-        int howManyPicesMax = 5;
+        [SerializeField] DropLibrary dropLibrary;
+      
 
         public void RandomDrop()
         {
-            int howManyDrops = Random.Range(0, howManyDropsMax);
-            for( int counter=0; counter < howManyDrops; counter++ )
+            var baseStats = GetComponent<BaseStats>();
+
+            var drops = dropLibrary.GetRandomDrops(baseStats.GetLevel());
+            foreach (var drop in drops)
             {
-                int i = Random.Range(0, dropLibrary.Length);
-                int number = Random.Range(1, howManyPicesMax);
-                DropItem(dropLibrary[i], number);
+                DropItem(drop.item, drop.number);
             }
         }
 
