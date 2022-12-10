@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RPG.Inventories
 {
-    [CreateAssetMenu(menuName = ("RPG/Inventory/Drop Library"))]
+    [CreateAssetMenu(menuName = ("Game/Inventory/Drop Library"))]
     public class DropLibrary : ScriptableObject
     {
         [SerializeField]
