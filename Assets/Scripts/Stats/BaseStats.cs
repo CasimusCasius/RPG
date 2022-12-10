@@ -1,7 +1,5 @@
 using GameDevTV.Utils;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RPG.Stats
@@ -25,9 +23,9 @@ namespace RPG.Stats
         }
         private void Start()
         {
-            currentLevel.ForceInit(); 
+            currentLevel.ForceInit();
         }
-        
+
 
         private void OnEnable()
         {

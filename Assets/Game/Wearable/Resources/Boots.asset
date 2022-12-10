@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e008d7ef7c60cce4bbd7b44df669bbe3, type: 3}
+  m_Name: Boots
+  m_EditorClassIdentifier: 
+  itemID: 7b65c6a4-e419-45be-91ba-dd9d34184ea2
+  displayName: Boots
+  description: Plate boots
+  icon: {fileID: 21300000, guid: e89ca016d404a6a4687a5ee741e2d2b5, type: 3}
+  pickup: {fileID: 9001082688257068514, guid: 81ca75187943dc34a86c7daf1f4209ed, type: 3}
+  stackable: 0
+  allowedEquipLocation: 4

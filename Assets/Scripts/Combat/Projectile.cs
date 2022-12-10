@@ -11,8 +11,8 @@ namespace RPG.Combat
         [SerializeField] GameObject hitEffect = null;
         [SerializeField] UnityEvent onHit;
         [SerializeField] AudioSource hitSFX = null;
-        [SerializeField] AudioSource launchSFX= null;
-            
+        [SerializeField] AudioSource launchSFX = null;
+
 
 
         float projectileRange;
@@ -60,7 +60,6 @@ namespace RPG.Combat
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject == damageDealer.gameObject) { return; }
-            projectileSpeed = 0;
             if (other.TryGetComponent<Health>(out Health enemy))
             {
                 if (enemy.IsDead()) { return; }
@@ -69,6 +68,8 @@ namespace RPG.Combat
                 enemy.TakeDamage(damageDealer, damage);
                 Destroy(gameObject, 0.2f);
             }
+            //TODO block by bulding
+
 
             Destroy(gameObject, timeOfLife);
         }

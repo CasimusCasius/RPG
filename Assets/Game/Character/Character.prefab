@@ -176,6 +176,7 @@ GameObject:
   - component: {fileID: 1772952121}
   - component: {fileID: 2886810712078973941}
   - component: {fileID: 3450452326543540838}
+  - component: {fileID: 1355111928587040860}
   - component: {fileID: -6473438402206157708}
   - component: {fileID: 4248885061626635933}
   - component: {fileID: -4123090740522156941}
@@ -301,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 6
+  maxPathLenght: 40
 --- !u!114 &2886810712078973941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +319,6 @@ MonoBehaviour:
   rightHandTransform: {fileID: 2431178679580950163}
   leftHandTransform: {fileID: 0}
   defaultWeapon: {fileID: 0}
-  launchProjectileAusioSource: {fileID: 0}
 --- !u!114 &3450452326543540838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +331,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f697d9562fe624d92c2085936f91cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1355111928587040860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3955697029563211041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1f7e849cf724848982ad7dbc844ea1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scatterDistance: 1
+  dropLibrary:
+  - {fileID: 11400000, guid: 7746edc7445c47147834d05419e7fd9b, type: 2}
+  - {fileID: 11400000, guid: d94a4a7d39e6fcb4e8c085ba48be1654, type: 2}
+  - {fileID: 11400000, guid: 5f7aae5e0b8877e49b0ac103ab411a4a, type: 2}
+  - {fileID: 11400000, guid: 62ffedc1ce4ca0d4399d9ca1b1ea5833, type: 2}
+  - {fileID: 11400000, guid: 0a9f39baccf21464c8b0522e4eda2c9e, type: 2}
+  howManyDropsMax: 3
 --- !u!114 &-6473438402206157708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,6 +402,18 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6102014525413612810, guid: cb344e7a2fb5f3b42b9c28fa54bd098e, type: 3}
+        m_TargetAssemblyTypeName: RPG.Inventories.RandomDropper, Assembly-CSharp
+        m_MethodName: RandomDrop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2

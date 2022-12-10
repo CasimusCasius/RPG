@@ -1,10 +1,10 @@
-using RPG.Combat;
 using RPG.Atributes;
-using RPG.Movment;
-using UnityEngine;
+using RPG.Libraries.Inventories;
+using RPG.Movement;
 using System;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
@@ -22,7 +22,9 @@ namespace RPG.Control
 
         [SerializeField] CursorMapping[] cursorMappings = null;
         [SerializeField] float maxDistanceToNavMeshPoint = 1f;
-        [SerializeField] float castRadius=0.5f;
+        [SerializeField] float castRadius = 0.5f;
+
+        bool isDraggingUI = false;
 
         private void Awake()
         {
@@ -30,7 +32,7 @@ namespace RPG.Control
         }
         private void Update()
         {
-
+            CheckSpecialAbilityKeys();
             if (InteractWithUI()) return;
             if (health.IsDead())
             {
@@ -41,6 +43,16 @@ namespace RPG.Control
             if (InteractWithMovement()) return;
 
             SetCursor(CursorType.None);
+        }
+        private void CheckSpecialAbilityKeys()
+        {
+            var actionStore = GetComponent<ActionStore>();
+            if (Input.GetKeyDown(KeyCode.Alpha1)) actionStore.Use(0, gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) actionStore.Use(1, gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) actionStore.Use(2, gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha4)) actionStore.Use(3, gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha5)) actionStore.Use(4, gameObject);
+            if (Input.GetKeyDown(KeyCode.Alpha6)) actionStore.Use(5, gameObject);
         }
 
         private bool InteractWithComponent()
@@ -61,7 +73,7 @@ namespace RPG.Control
         }
         private RaycastHit[] RaycastAllSorted()
         {
-            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(),castRadius);
+            RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), castRadius);
             float[] distances = new float[hits.Length];
             for (int i = 0; i < hits.Length; i++)
             {
@@ -74,11 +86,14 @@ namespace RPG.Control
 
         private bool InteractWithUI()
         {
+            if (Input.GetMouseButtonUp(0)) isDraggingUI = false;
             if (EventSystem.current.IsPointerOverGameObject())
             {
+                if (Input.GetMouseButtonDown(0)) isDraggingUI = true;
                 SetCursor(CursorType.UI);
                 return true;
             }
+            if (isDraggingUI) return true;
             return false;
         }
         private bool InteractWithMovement()

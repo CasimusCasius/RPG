@@ -2,8 +2,7 @@ using GameDevTV.Utils;
 using RPG.Atributes;
 using RPG.Combat;
 using RPG.Core;
-using RPG.Movment;
-using System;
+using RPG.Movement;
 using UnityEngine;
 namespace RPG.Control
 {
@@ -16,7 +15,7 @@ namespace RPG.Control
         [SerializeField] float timeOfDwelling = 3f;
         [SerializeField] float patrolSpeedFraction = 0.2f;
         [SerializeField] float agroDurationTime = 5f;
-        [SerializeField] float shoutDistance=5f;
+        [SerializeField] float shoutDistance = 5f;
 
         Fighter fighter;
         Health health;
@@ -29,7 +28,7 @@ namespace RPG.Control
         int currentWaypointIndex;
         float timeSinceLastSawPlayer = Mathf.Infinity;
         float timeSinceArrivedAtWaypoint = Mathf.Infinity;
-        
+
 
         private void Awake()
         {
@@ -51,7 +50,7 @@ namespace RPG.Control
         }
         private void OnEnable()
         {
-            health.onHealthChanged += Health_onHealthChanged; 
+            health.onHealthChanged += Health_onHealthChanged;
         }
         private void OnDisable()
         {
@@ -98,7 +97,7 @@ namespace RPG.Control
             {
                 AIController enemy = hit.collider.GetComponent<AIController>();
                 if (enemy == null) continue;
-                enemy.Aggrivate(); 
+                enemy.Aggrivate();
             }
 
         }

@@ -1,12 +1,11 @@
 using RPG.Atributes;
 using RPG.Control;
-using System;
 using System.Collections;
 using UnityEngine;
 
 namespace RPG.Combat
 {
-    public class WeaponPickup : MonoBehaviour,IRaycastable
+    public class WeaponPickup : MonoBehaviour, IRaycastable
 
     {
         [SerializeField] WeaponConfig weapon = null;
@@ -39,7 +38,7 @@ namespace RPG.Combat
         {
             Collider collider = GetComponent<Collider>();
             collider.enabled = shouldShow;
-            foreach (Transform child in transform)  
+            foreach (Transform child in transform)
             {
                 child.gameObject.SetActive(shouldShow);
             }
