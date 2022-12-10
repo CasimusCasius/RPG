@@ -5,6 +5,6 @@ namespace RPG.Dialogue
     {
         public string uniqueID;
         public string text;
-        public DialogueNode[] NextDialogueNodes;
+        public string[] NextDialogueNodes;
     }
 }
