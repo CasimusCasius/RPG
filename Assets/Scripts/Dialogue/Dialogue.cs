@@ -46,8 +46,8 @@ namespace RPG.Dialogue
 
         public IEnumerable<DialogueNode> GetAllChildren(DialogueNode parentNode)
         {
-            if (parentNode.NextDialogueNodes == null) yield break;
-            foreach (string nodeChild in parentNode.NextDialogueNodes)
+            if (parentNode.nextDialogueNodes == null) yield break;
+            foreach (string nodeChild in parentNode.nextDialogueNodes)
             {
                 if (!nodeLookup.ContainsKey(nodeChild)) continue;
                 yield return nodeLookup[nodeChild];
@@ -59,9 +59,25 @@ namespace RPG.Dialogue
             DialogueNode addedNode = new DialogueNode();
             addedNode.uniqueID = System.Guid.NewGuid().ToString();
 
-            parent.NextDialogueNodes.Add(addedNode.uniqueID);
+            parent.nextDialogueNodes.Add(addedNode.uniqueID);
+            addedNode.rect.position = parent.rect.position + new Vector2(200,0);
             nodes.Add(addedNode);
             OnValidate();
+        }
+
+        public void DeleteNode(DialogueNode nodeToDelete)
+        {
+            nodes.Remove(nodeToDelete);
+            OnValidate();
+            ClearDanglingChildren(nodeToDelete);
+        }
+
+        private void ClearDanglingChildren(DialogueNode nodeToDelete)
+        {
+            foreach (var node in GetAllNodes())
+            {
+                node.nextDialogueNodes.Remove(nodeToDelete.uniqueID);
+            }
         }
     }
 }

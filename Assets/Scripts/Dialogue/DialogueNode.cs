@@ -8,7 +8,7 @@ namespace RPG.Dialogue
     {
         public string uniqueID;
         public string text;
-        public List<string> NextDialogueNodes = new List<string>();
+        public List<string> nextDialogueNodes = new List<string>();
         public Rect rect = new Rect (0,0,200,100);
     }
 }

@@ -15,10 +15,40 @@ MonoBehaviour:
   nodes:
   - uniqueID: 87ac46da-be28-4c76-a232-dc006f5855c6
     text: 
-    NextDialogueNodes: []
+    nextDialogueNodes:
+    - 534c6421-ce3b-4a5a-9ee7-83a905fb11c5
+    - 094d24c5-f242-460e-8eee-1984a08afbfb
     rect:
       serializedVersion: 2
-      x: 0
-      y: 0
+      x: 39
+      y: 122
+      width: 200
+      height: 100
+  - uniqueID: 534c6421-ce3b-4a5a-9ee7-83a905fb11c5
+    text: 
+    nextDialogueNodes: []
+    rect:
+      serializedVersion: 2
+      x: 356
+      y: 175
+      width: 200
+      height: 100
+  - uniqueID: 094d24c5-f242-460e-8eee-1984a08afbfb
+    text: 
+    nextDialogueNodes:
+    - af0cd3ad-642b-4490-978a-064197ff9300
+    rect:
+      serializedVersion: 2
+      x: 367
+      y: 35
+      width: 200
+      height: 100
+  - uniqueID: af0cd3ad-642b-4490-978a-064197ff9300
+    text: 
+    nextDialogueNodes: []
+    rect:
+      serializedVersion: 2
+      x: 864
+      y: 105
       width: 200
       height: 100

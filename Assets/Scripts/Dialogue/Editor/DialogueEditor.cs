@@ -10,10 +10,14 @@ namespace RPG.Dialogue.Editor
     public class DialogueEditor : EditorWindow
     {
         Dialogue selectedDialogue = null;
+        Vector2 scrollPosition = new Vector2();
         [NonSerialized] GUIStyle nodeStyle;
         [NonSerialized] DialogueNode draggingNode = null;
         [NonSerialized] Vector2 draggingOffset = new Vector2();
         [NonSerialized] DialogueNode creatingNode = null;
+        [NonSerialized] DialogueNode deletingNode = null;
+        [NonSerialized] DialogueNode linkingParentNode = null;
+        [NonSerialized] Vector2 offsetMousePosition = new Vector2();
 
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowEditorWindow()
@@ -38,7 +42,7 @@ namespace RPG.Dialogue.Editor
             nodeStyle = new GUIStyle();
             nodeStyle.normal.background = (Texture2D)EditorGUIUtility.Load("node3");
             nodeStyle.padding = new RectOffset(20, 20, 20, 20);
-            nodeStyle.border = new RectOffset(24,24,24,24);
+            nodeStyle.border = new RectOffset(24, 24, 24, 24);
         }
         private void OnDisable()
         {
@@ -54,6 +58,10 @@ namespace RPG.Dialogue.Editor
             else
             {
                 ProcessEvents();
+
+                scrollPosition =  GUILayout.BeginScrollView(scrollPosition);
+                GUILayoutUtility.GetRect(4000,4000);
+
                 foreach (var node in selectedDialogue.GetAllNodes())
                 {
                     DrawConection(node);
@@ -62,28 +70,56 @@ namespace RPG.Dialogue.Editor
                 {
                     DrawNode(node);
                 }
+                GUILayout.EndScrollView();
                 if (creatingNode != null)
                 {
                     Undo.RecordObject(selectedDialogue, "Add node");
                     selectedDialogue.CreateNode(creatingNode);
+                    
                     creatingNode = null;
+                }
+                if (deletingNode != null)
+                {
+                    Undo.RecordObject(selectedDialogue, "Remove node");
+                    selectedDialogue.DeleteNode(deletingNode);
+                    deletingNode = null;
                 }
             }
         }
         private void ProcessEvents()
         {
+           
             if (Event.current.type == EventType.MouseDown && draggingNode == null)
             {
-
-                draggingNode = GetNodeAtPoint(Event.current.mousePosition);
+                draggingNode = GetNodeAtPoint(Event.current.mousePosition+scrollPosition);
                 if (draggingNode != null)
+                {
                     draggingOffset = draggingNode.rect.position - Event.current.mousePosition;
+                }
+                else
+                {
+                    offsetMousePosition = Event.current.mousePosition;
+                }
             }
-            else if (Event.current.type == EventType.MouseDrag && draggingNode != null)
+            else if (Event.current.type == EventType.MouseDrag)
             {
-                Undo.RecordObject(selectedDialogue, "Update Node Position");
-                draggingNode.rect.position = Event.current.mousePosition + draggingOffset;
-                GUI.changed = true;
+                if (draggingNode != null)
+                {
+                    Undo.RecordObject(selectedDialogue, "Update Node Position");
+                    draggingNode.rect.position = Event.current.mousePosition + draggingOffset;
+                    GUI.changed = true;
+                }
+                else
+                {
+                    offsetMousePosition -= Event.current.mousePosition;
+                   
+                    scrollPosition += offsetMousePosition;
+                    offsetMousePosition = Event.current.mousePosition;
+
+                    GUI.changed = true;
+                }
+                
+
             }
             else if (Event.current.type == EventType.MouseUp && draggingNode != null)
             {
@@ -92,6 +128,7 @@ namespace RPG.Dialogue.Editor
         }
         private DialogueNode GetNodeAtPoint(Vector2 mousePosition)
         {
+            
             DialogueNode foundNode = null;
             foreach (var node in selectedDialogue.GetAllNodes())
             {
@@ -107,7 +144,7 @@ namespace RPG.Dialogue.Editor
 
             GUILayout.BeginArea(node.rect, nodeStyle);
             EditorGUI.BeginChangeCheck();
-            
+
             string testString = EditorGUILayout.TextField(node.text);
 
             if (EditorGUI.EndChangeCheck())
@@ -115,31 +152,80 @@ namespace RPG.Dialogue.Editor
                 Undo.RecordObject(selectedDialogue, "Update Dialogue Text");
                 node.text = testString;
             }
+
+            GUILayout.BeginHorizontal();
             if (GUILayout.Button("+"))
             {
                 creatingNode = node;
             }
+
+            DrawLinkButtons(node);
+
+            if (GUILayout.Button("-"))
+            {
+                deletingNode = node;
+            }
+            GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
+
+        private void DrawLinkButtons(DialogueNode node)
+        {
+            if (linkingParentNode == null)
+            {
+                if (GUILayout.Button("link"))
+                {
+                    linkingParentNode = node;
+                }
+            }
+            else if (linkingParentNode == node)
+            {
+                if (GUILayout.Button("cancel"))
+                {
+
+                    linkingParentNode = null;
+                }
+            }
+            else if (linkingParentNode.nextDialogueNodes.Contains(node.uniqueID))
+            {
+                if (GUILayout.Button("unlink"))
+                {
+                    Undo.RecordObject(selectedDialogue, "Unlink with node");
+                    linkingParentNode.nextDialogueNodes.Remove(node.uniqueID);
+                    linkingParentNode = null;
+                }
+            }
+            else
+            {
+                if (GUILayout.Button("child"))
+                {
+                    Undo.RecordObject(selectedDialogue, "Link to parent");
+                    linkingParentNode.nextDialogueNodes.Add(node.uniqueID);
+                    linkingParentNode = null;
+                }
+
+            }
+        }
+        
         private void DrawConection(DialogueNode node)
         {
             float lineWidth = 4f;
             float curveFactor = 0.8f;
             float pointOffset = 5f;
             Vector3 startPoint = new Vector2(node.rect.xMax - pointOffset, node.rect.center.y);
-            
+
             foreach (var childNode in selectedDialogue.GetAllChildren(node))
             {
                 Vector3 endPoint = new Vector2(childNode.rect.xMin + pointOffset, childNode.rect.center.y);
-                Vector3 controlPointOffset = endPoint- startPoint;
+                Vector3 controlPointOffset = endPoint - startPoint;
                 controlPointOffset.y = 0;
                 controlPointOffset.x *= curveFactor;
                 Handles.DrawBezier(
                     startPoint,
                     endPoint,
                     startPoint + controlPointOffset,
-                    endPoint-controlPointOffset, 
-                    Color.blue,null, 
+                    endPoint - controlPointOffset,
+                    Color.blue, null,
                     lineWidth);
             }
         }
