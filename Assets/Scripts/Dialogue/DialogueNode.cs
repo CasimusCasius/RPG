@@ -10,11 +10,12 @@ namespace RPG.Dialogue
         [SerializeField] private string text;
         [SerializeField] private List<string> nextDialogueNodes = new List<string>();
         [SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
-
+        [SerializeField] private bool playerSpeking = false;
 
         public string GetText() => text;
         public Rect GetRect() => rect;
         public List<string> GetListOfNextDialogueNodes() => nextDialogueNodes;
+        public bool IsPlayerSpeaking() => playerSpeking;
 
 
 #if UNITY_EDITOR
@@ -46,6 +47,11 @@ namespace RPG.Dialogue
             Undo.RecordObject(this, "Update Rect Position");
             rect.position = position;
             EditorUtility.SetDirty(this);
+        }
+        public void SetSpeaking(bool isPlayerSpeaking) 
+        {
+            Undo.RecordObject(this, "Speaking side chenged");
+            playerSpeking = isPlayerSpeaking;        
         }
 #endif
     }

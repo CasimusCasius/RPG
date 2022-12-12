@@ -11,6 +11,7 @@ namespace RPG.Dialogue.Editor
         Dialogue selectedDialogue = null;
         Vector2 scrollPosition = new Vector2();
         [NonSerialized] GUIStyle nodeStyle;
+        [NonSerialized] GUIStyle playerNodeStyle;
         [NonSerialized] DialogueNode draggingNode = null;
         [NonSerialized] Vector2 draggingOffset = new Vector2();
         [NonSerialized] DialogueNode creatingNode = null;
@@ -45,6 +46,11 @@ namespace RPG.Dialogue.Editor
             nodeStyle.normal.background = (Texture2D)EditorGUIUtility.Load("node3");
             nodeStyle.padding = new RectOffset(20, 20, 20, 20);
             nodeStyle.border = new RectOffset(24, 24, 24, 24);
+
+            playerNodeStyle = new GUIStyle();
+            playerNodeStyle.normal.background = (Texture2D)EditorGUIUtility.Load("node1");
+            playerNodeStyle.padding = new RectOffset(20, 20, 20, 20);
+            playerNodeStyle.border = new RectOffset(24, 24, 24, 24);
         }
         private void OnDisable()
         {
@@ -140,21 +146,25 @@ namespace RPG.Dialogue.Editor
         }
         private void DrawNode(DialogueNode node)
         {
-            GUILayout.BeginArea(node.GetRect(), nodeStyle);
+            GUIStyle style = nodeStyle;
+
+            if (node.IsPlayerSpeaking()) { style = playerNodeStyle; }
+
+            GUILayout.BeginArea(node.GetRect(), style);
 
             node.SetText(EditorGUILayout.TextField(node.GetText()));
 
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("+"))
+            if (GUILayout.Button("-"))
             {
-                creatingNode = node;
+                deletingNode = node;
             }
 
             DrawLinkButtons(node);
 
-            if (GUILayout.Button("-"))
+            if (GUILayout.Button("+"))
             {
-                deletingNode = node;
+                creatingNode = node;
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
@@ -162,6 +172,8 @@ namespace RPG.Dialogue.Editor
 
         private void DrawLinkButtons(DialogueNode node)
         {
+            
+           
             if (linkingParentNode == null)
             {
                 if (GUILayout.Button("link"))
@@ -179,15 +191,16 @@ namespace RPG.Dialogue.Editor
             }
             else if (linkingParentNode.GetListOfNextDialogueNodes().Contains(node.name))
             {
+                
                 if (GUILayout.Button("unlink"))
                 {
-                    
                     linkingParentNode.RemoveNextDialogueNode(node.name);
                     linkingParentNode = null;
                 }
             }
             else
             {
+               
                 if (GUILayout.Button("child"))
                 {
                     
@@ -224,6 +237,7 @@ namespace RPG.Dialogue.Editor
             if (Selection.activeObject as Dialogue != null)
             {
                 selectedDialogue = (Dialogue)Selection.activeObject;
+
                 Repaint();
             }
         }

@@ -10,15 +10,12 @@ namespace RPG.Dialogue
     public class Dialogue : ScriptableObject, ISerializationCallbackReceiver
     {
         [SerializeField] List<DialogueNode> nodes = new List<DialogueNode>();
-
+        [SerializeField] Vector2 newNodeOffset = new Vector2(200, 0);
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
 
         private void OnValidate()
         {
-            if (nodeLookup == null) return;
-            if (nodes == null || nodes.Count == 0) return;
-            if (nodes[0].name == "") return;
             nodeLookup.Clear();
            
             foreach (DialogueNode node in nodes)
@@ -49,8 +46,12 @@ namespace RPG.Dialogue
         {
             DialogueNode addedNode = MakeNewNode(parent);
             Undo.RegisterCreatedObjectUndo(addedNode, "Create node");
-            Undo.RecordObject(this, "Add node");
+            if (AssetDatabase.GetAssetPath(this) != "")
+            {
+                Undo.RecordObject(this, "Add node");
+            }
             AddNode(addedNode);
+            
         }
         private void AddNode(DialogueNode addedNode)
         {
@@ -58,7 +59,7 @@ namespace RPG.Dialogue
             OnValidate();
         }
 
-        private static DialogueNode MakeNewNode(DialogueNode parent)
+        private DialogueNode MakeNewNode(DialogueNode parent)
         {
             DialogueNode addedNode = CreateInstance<DialogueNode>();
             addedNode.name = System.Guid.NewGuid().ToString();
@@ -66,8 +67,8 @@ namespace RPG.Dialogue
             if (parent != null)
             {
                 parent.AddNextDialogueNode(addedNode.name);
-                addedNode.SetRectPosition(parent.GetRect().position + new Vector2(200, 0));
-
+                addedNode.SetRectPosition(parent.GetRect().position + newNodeOffset);
+                addedNode.SetSpeaking(!parent.IsPlayerSpeaking());
             }
 
             return addedNode;
