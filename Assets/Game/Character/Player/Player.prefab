@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1355111928587040860, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
+      propertyPath: dropLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c3640608959fc346833af0a4abade32, type: 2}
     - target: {fileID: 2431178679580950163, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -148,6 +152,19 @@ CapsuleCollider:
   m_Height: 1.8324981
   m_Direction: 1
   m_Center: {x: 0, y: 1.067318, z: 0}
+--- !u!114 &1011387699819132609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935976370342273922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ece0bba080a8dc498a78793f0dba9e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDialogue: {fileID: 0}
 --- !u!114 &1186838538989985504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,19 +259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   experiencePoints: 0
---- !u!114 &1011387699819132609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 935976370342273922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ece0bba080a8dc498a78793f0dba9e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentDialogue: {fileID: 0}
 --- !u!4 &1992135649211908144 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2431178679580950163, guid: d48f2dc7b01c3ee4b998033e198107a6, type: 3}

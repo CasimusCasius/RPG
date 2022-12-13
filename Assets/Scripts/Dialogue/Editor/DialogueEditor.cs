@@ -214,7 +214,7 @@ namespace RPG.Dialogue.Editor
         {
             float lineWidth = 4f;
             float curveFactor = 0.8f;
-            float pointOffset = 5f;
+            float pointOffset = 0f;
             Vector3 startPoint = new Vector2(node.GetRect().xMax - pointOffset, node.GetRect().center.y);
 
             foreach (var childNode in selectedDialogue.GetAllChildren(node))
@@ -230,7 +230,9 @@ namespace RPG.Dialogue.Editor
                     endPoint - controlPointOffset,
                     Color.blue, null,
                     lineWidth);
+                
             }
+            
         }
         private void onSelectionChanged()
         {

@@ -41,6 +41,27 @@ namespace RPG.Dialogue
                 yield return nodeLookup[nodeChild];
             }
         }
+        public IEnumerable<DialogueNode> GetPlayerChildren(DialogueNode parentNode)
+        {
+            foreach (DialogueNode node in GetAllChildren(parentNode))
+            {
+                if (node.IsPlayerSpeaking())
+                {
+                    yield return node;
+                }
+            }
+        }
+        public IEnumerable<DialogueNode> GetAIChildren(DialogueNode parentNode)
+        {
+            foreach (DialogueNode node in GetAllChildren(parentNode))
+            {
+                if (!node.IsPlayerSpeaking())
+                {
+                    yield return node;
+                }
+            }
+
+        }
 #if UNITY_EDITOR
         public void CreateNode(DialogueNode parent)
         {
@@ -58,7 +79,6 @@ namespace RPG.Dialogue
             nodes.Add(addedNode);
             OnValidate();
         }
-
         private DialogueNode MakeNewNode(DialogueNode parent)
         {
             DialogueNode addedNode = CreateInstance<DialogueNode>();
@@ -118,6 +138,5 @@ namespace RPG.Dialogue
         {
             // Not interested
         }
-
     }
 }
