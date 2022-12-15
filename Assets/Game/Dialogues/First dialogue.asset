@@ -16,11 +16,13 @@ MonoBehaviour:
   nextDialogueNodes: []
   rect:
     serializedVersion: 2
-    x: 727
-    y: 279
+    x: 731
+    y: 233
     width: 200
     height: 100
   playerSpeking: 0
+  onEnterAction: enter
+  onExitAction: Attack
 --- !u!114 &-6084628753043016796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43,6 +45,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 0
+  onEnterAction: enter
+  onExitAction: exit
 --- !u!114 &-5384799267100055331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +70,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 1
+  onEnterAction: 
+  onExitAction: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +116,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 0
+  onEnterAction: enter
+  onExitAction: exit
 --- !u!114 &2621948542465432433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +140,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 1
+  onEnterAction: 
+  onExitAction: 
 --- !u!114 &3440191052774887317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,6 +164,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 1
+  onEnterAction: 
+  onExitAction: 
 --- !u!114 &4645787487388462296
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +189,8 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 1
+  onEnterAction: 
+  onExitAction: 
 --- !u!114 &6873694455068618913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,3 +214,5 @@ MonoBehaviour:
     width: 200
     height: 100
   playerSpeking: 0
+  onEnterAction: enter
+  onExitAction: exit

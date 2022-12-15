@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -11,11 +12,17 @@ namespace RPG.Dialogue
         [SerializeField] private List<string> nextDialogueNodes = new List<string>();
         [SerializeField] private Rect rect = new Rect(0, 0, 200, 100);
         [SerializeField] private bool playerSpeking = false;
+        [SerializeField] private string onEnterAction;
+        [SerializeField] private string onExitAction;
+        
 
         public string GetText() => text;
         public Rect GetRect() => rect;
         public List<string> GetListOfNextDialogueNodes() => nextDialogueNodes;
         public bool IsPlayerSpeaking() => playerSpeking;
+        public string GetOnEnterAction() => onEnterAction;
+        public string GetOnExitAction()=> onExitAction;
+
 
 
 #if UNITY_EDITOR
@@ -52,6 +59,11 @@ namespace RPG.Dialogue
         {
             Undo.RecordObject(this, "Speaking side chenged");
             playerSpeking = isPlayerSpeaking;        
+        }
+
+        internal string GetConversantName()
+        {
+            throw new NotImplementedException();
         }
 #endif
     }

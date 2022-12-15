@@ -1,7 +1,5 @@
 using RPG.Libraries.Inventories;
 using RPG.Stats;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,15 +10,16 @@ namespace RPG.Inventories
         const int ATTEMPTS = 30;
 
         [Tooltip("Radius of Dropped Items with dropper in center")]
-        [SerializeField]float scatterDistance = 1.0f;
+        [SerializeField] float scatterDistance = 1.0f;
         [SerializeField] DropLibrary dropLibrary;
-      
+
 
         public void RandomDrop()
         {
             var baseStats = GetComponent<BaseStats>();
 
             var drops = dropLibrary.GetRandomDrops(baseStats.GetLevel());
+            if (drops == null) return;
             foreach (var drop in drops)
             {
                 DropItem(drop.item, drop.number);

@@ -23,6 +23,7 @@ public class HealthBar : MonoBehaviour
     {
         health.onHealthChanged += Health_onHealthChanged;
         health.onDead += Die;
+        if (combatTarget == null) return;
         combatTarget.OnAttacked += CombatTarget_onAttacked;
     }
     private void Update()
@@ -35,6 +36,7 @@ public class HealthBar : MonoBehaviour
     {
         health.onHealthChanged -= Health_onHealthChanged;
         health.onDead -= Die;
+        if (combatTarget == null) return;
         combatTarget.OnAttacked -= CombatTarget_onAttacked;
     }
     private void CombatTarget_onAttacked()

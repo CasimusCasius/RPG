@@ -6,44 +6,39 @@ using TMPro;
 using UnityEngine.UI;
 
 namespace RPG.UI
-{ 
+{
     public class DialogueUI : MonoBehaviour
     {
         PlayerConversant playerConversant;
         [SerializeField] TextMeshProUGUI AIText;
-        [SerializeField] Transform AIResponce;  
+        [SerializeField] Transform AIResponce;
         [SerializeField] Button nextButton;
         [SerializeField] Transform choiseRoot;
         [SerializeField] Button choiseButtonPrefab;
+        [SerializeField] Button quitButton;
+        [SerializeField] TextMeshProUGUI conversantName;
 
         private void Start()
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             playerConversant = player.GetComponent<PlayerConversant>();
-            nextButton.onClick.AddListener(Next);
+            playerConversant.onConversationUpdated += UpdateUI;
+            nextButton.onClick.AddListener(() => playerConversant.Next());
+            quitButton.onClick.AddListener(()=>playerConversant.Quit());
+
             UpdateUI();
         }
-
-        void Next()
-        {
-            playerConversant.Next();
-            UpdateUI();
-        }
-
         private void UpdateUI()
         {
+            gameObject.SetActive(playerConversant.IsActive());
+            if (!playerConversant.IsActive()) return;
+            conversantName.text = playerConversant.GetCurrentConversantName();
             AIResponce.gameObject.SetActive(!playerConversant.IsChoosing());
             choiseRoot.gameObject.SetActive(playerConversant.IsChoosing());
 
             if (playerConversant.IsChoosing())
             {
-                DestroyChoiseButtons();
-
-                foreach (var choice in playerConversant.GetChoices())
-                {
-                    var choiseInst = Instantiate(choiseButtonPrefab, choiseRoot);
-                    choiseInst.GetComponentInChildren<TextMeshProUGUI>().text = choice.GetText();
-                }
+                BuildChoiceList();
             }
             else
             {
@@ -51,7 +46,23 @@ namespace RPG.UI
                 nextButton.gameObject.SetActive(playerConversant.HasNext());
             }
         }
+        private void BuildChoiceList()
+        {
+            DestroyChoiseButtons();
 
+            foreach (var choice in playerConversant.GetChoices())
+            {
+                var choiceInst = Instantiate(choiseButtonPrefab, choiseRoot);
+                choiceInst.GetComponentInChildren<TextMeshProUGUI>().text = choice.GetText();
+
+                Button button = choiceInst.GetComponentInChildren<Button>();
+                button.onClick.AddListener(() =>
+                {
+                    playerConversant.SelectChoice(choice);
+                }
+                );
+            }
+        }
         private void DestroyChoiseButtons()
         {
             foreach (Transform item in choiseRoot)
